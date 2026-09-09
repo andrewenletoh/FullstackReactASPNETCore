@@ -19,7 +19,7 @@
     border-radius: 0.75rem;
     color: inherit;
     background: rgb(255 250 255 / 0.72);
-    box-shadow: 0 1rem 2.5rem rgb(46 44 47 / 0.08);
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.05);
     backdrop-filter: blur(5px);
     text-decoration: none;
     transition: border-color 200ms ease, box-shadow 200ms ease, transform 200ms ease;
@@ -27,7 +27,7 @@
 
 .repoTile:hover {
     border-color: var(--color-tropical-teal);
-    box-shadow: 0 1.25rem 2.75rem rgb(46 44 47 / 0.12);
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.05);
     transform: translateY(-3px);
 }
 

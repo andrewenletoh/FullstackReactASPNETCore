@@ -6,7 +6,6 @@
     min-height: max(30rem, calc(100vh - 64px - 6rem));
     flex-shrink: 0;
     overflow: hidden;
-    border: 1px solid rgb(71 91 99 / 0.14);
     border-radius: 0.625rem;
     background: rgb(219 251 250 / 0.35);
 }
