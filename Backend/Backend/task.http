@@ -1,0 +1,33 @@
+@base_address = http://localhost:3000/api/tasks
+
+POST {{base_address}}
+Content-Type: application/json
+
+{
+    "title":"Sample Task",
+    "description":"This is a sample task",
+    "status": 0
+}
+
+###
+GET {{base_address}}
+
+###
+GET {{base_address}}/1
+
+###
+GET {{base_address}}?status=ToDo
+
+###
+PUT {{base_address}}/1
+Content-Type: application/json
+
+{
+    "id": 1,
+    "title":"Updated Task",
+    "description":"This is an updated task",
+    "status":1
+}
+
+###
+DELETE {{base_address}}/1

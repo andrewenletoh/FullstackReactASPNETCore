@@ -1,0 +1,82 @@
+.page {
+    background: var(--color-ghost-white);
+}
+
+.spacer {
+    width: 100vw;
+    aspect-ratio: 20 / 1;
+    min-height: 64px;
+}
+
+.intro {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: end;
+}
+
+.content {
+
+
+    display: flex;
+    width: 100vw;
+    aspect-ratio: 3 / 1;
+    justify-content: center;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.introPortrait {
+    width: clamp(1rem, 25vw, 20rem);
+    background: var(--color-frozen-water);
+    border-radius: 5%;
+    aspect-ratio: 4 / 5;
+}
+
+.introHeader1 {
+    font-size: clamp(2.20rem, 7vw, 7rem);
+    color: var(--color-shadow-grey);
+    font-weight: 800;
+    margin: 0;
+    line-height: 1;
+}
+
+.introHeader2 {
+    font-size: clamp(1rem, 2.27vw, 2.27rem);
+    color: var(--color-shadow-grey);
+    margin: 0;
+    line-height: 1.5;
+}
+
+.introText {
+    font-size: clamp(0.75rem, 1.70vw, 1.70rem);
+    color: var(--color-shadow-grey);
+    margin: 0;
+    line-height: 1.5;
+}
+
+.projects {
+    display: flex;
+    width: 100vw;
+    margin: 0;
+    padding: clamp(2rem, 5vw, 4rem) 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    background: var(--color-shadow-grey);
+}
+
+.projectsContent {
+    display: flex;
+    width: min(100%, 80rem);
+    flex-direction: column;
+    align-items: center;
+}
+
+.projectsHeader1 {
+    align-self: center;
+    margin: 0 0 1.5rem;
+    font-size: clamp(2.20rem, 5vw, 5rem);
+    color: var(--color-ghost-white);
+    line-height: 1;
+}

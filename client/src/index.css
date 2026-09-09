@@ -1,0 +1,29 @@
+:root {
+    --color-ghost-white: #ffFAff;
+    --color-tropical-teal: #17bebb;
+    --color-frozen-water: #dbfbfa;
+    --color-blue-slate: #475b63;
+    --color-shadow-grey: #2e2c2f;
+    --color-vibrant-coral: #ff5e5b;
+    --nav-bar-ratio: 1 / 20;
+    font-family: "Commissioner", sans-serif;
+    color: var(--color-shadow-grey);
+    background: var(--color-ghost-white);
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-width: 320px;
+    min-height: 320px;
+}
+
+button,
+input {
+    font: inherit;
+}

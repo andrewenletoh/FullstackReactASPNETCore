@@ -1,0 +1,33 @@
+.taskDashboard {
+    min-width: 0;
+    min-height: calc(100vh - 64px - 6rem);
+    height: 100%;
+    width: 100%;
+}
+
+.taskBoardInteractContainer {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.columns {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: safe center;
+    gap: 1rem;
+    width: 100%;
+    min-height: 0;
+    overflow-x: auto;
+    padding: 1.25rem;
+}
+
+@media (max-width: 600px) {
+    .columns {
+        padding: 1.25rem 0.75rem;
+    }
+}

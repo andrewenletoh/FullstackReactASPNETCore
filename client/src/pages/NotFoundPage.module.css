@@ -1,0 +1,22 @@
+.page {
+    background: var(--color-ghost-white);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+}
+
+.spacer {
+    width: 100vw;
+    aspect-ratio: 20 / 1;
+}
+
+.banner {
+    display: flex;
+    width: 100vw;
+    aspect-ratio: 20 / 1;
+    background: var(--color-shadow-grey);
+    color: var(--color-ghost-white);
+    align-items: center;
+    justify-content: center;
+}
