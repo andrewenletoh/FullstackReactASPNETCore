@@ -50,7 +50,7 @@ jobs:
           cd ${{ github.workspace }}/Backend/Backend
           dotnet tool install -g Amazon.Lambda.Tools
 
-      - name: Deploy to S3
+      - name: Deploy to lambda
         run: |
           cd ${{ github.workspace }}/Backend/Backend
           dotnet lambda deploy-function dotnet-backend-lambda-test --project-location .
