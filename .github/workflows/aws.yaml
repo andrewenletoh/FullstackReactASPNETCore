@@ -41,7 +41,7 @@ jobs:
           
       - name: Install dependencies
         run: |
-          cd ./client
+          cd ${{ github.workspace }}/client
           npm i
 
       - name: Build
@@ -50,5 +50,5 @@ jobs:
 
       - name: Deploy to S3
         run: |
-          aws s3 cp ./dist s3://react-dotnet-frontend-bucket --recursive
+          aws s3 cp ${{ github.workspace }}/client/dist s3://react-dotnet-frontend-bucket --recursive
  
