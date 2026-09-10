@@ -53,5 +53,5 @@ jobs:
       - name: Deploy to S3
         run: |
           cd ${{ github.workspace }}/Backend/Backend
-          dotnet lambda deploy-function YourFunctionName --project-location .
+          dotnet lambda deploy-function dotnet-backend-lambda-test --project-location .
  
