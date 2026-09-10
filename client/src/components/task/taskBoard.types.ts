@@ -1,5 +1,5 @@
 export type BackendTask = {
-    id: number;
+    id: string;
     title: string;
     description: string;
     status: number | string;
