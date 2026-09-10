@@ -1,12 +1,16 @@
-using Microsoft.EntityFrameworkCore;
+using MongoDB.Driver;
 
 namespace Backend.Models;
 
-public class AppDbContext : DbContext
+public class MongoDBContext
 {
-    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+    private readonly IMongoDatabase _database;
+    public MongoDBContext(IConfiguration config)
     {
+        var client = new MongoClient(config.GetConnectionString("Default"));
+        _database = client.GetDatabase(config["MongoDbName"] ?? "backend");
     }
-    public DbSet<Task> Tasks { get; set; }
+
+    public IMongoCollection<Task> Tasks => _database.GetCollection<Task>("tasks");
 
 }

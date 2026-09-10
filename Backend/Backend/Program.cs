@@ -1,10 +1,10 @@
-using Microsoft.EntityFrameworkCore;
-
 using Backend.Models;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddAWSLambdaHosting(LambdaEventSource.HttpApi);
 
 builder.Services.AddCors(options =>
 {
@@ -21,8 +21,7 @@ builder.Services.AddCors(options =>
 //services
 builder.Services.AddControllers();
 
-string connectionString = builder.Configuration.GetConnectionString("Default") ?? throw new ArgumentNullException("connectionString is Null");
-builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlite(connectionString));
+builder.Services.AddSingleton<MongoDBContext>();
 
 var app = builder.Build();
 

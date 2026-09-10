@@ -1,4 +1,4 @@
-name: Deploy to Amazon S3
+name: Deploy to Amazon Lambda
 
 on:
   push:
@@ -21,7 +21,7 @@ permissions:
   contents: read
 
 jobs:
-  S3PackageUpload:
+  LambdaPackageUpload:
     runs-on: ubuntu-latest
     steps:
       - name: Git clone the repository
@@ -31,25 +31,27 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v6.2.4
         with:
           role-to-assume: arn:aws:iam::819352519261:role/github-actions-oidc-role
-          role-session-name: awsS3FrontendDeploySession
+          role-session-name: awsLambdaBackendDeploySession
           aws-region: us-east-1
 
-      - name: Setup node npnm
-        uses: actions/setup-node@v7
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v6
         with:
-          node-version: v24.x
-          
-      - name: Install dependencies
-        run: |
-          cd ${{ github.workspace }}/client
-          npm i
+          dotnet-version: 10.0.x
 
-      - name: Build
+      - name: Restore and build
         run: |
-          cd ${{ github.workspace }}/client
-          npm run build
+          cd ${{ github.workspace }}/Backend/Backend
+          dotnet restore
+          dotnet build --configuration Release
+          
+      - name: Install lambda tools
+        run: |
+          cd ${{ github.workspace }}/Backend/Backend
+          dotnet tool install -g Amazon.Lambda.Tools
 
       - name: Deploy to S3
         run: |
-          aws s3 cp ${{ github.workspace }}/client/dist s3://react-dotnet-frontend-bucket --recursive
+          cd ${{ github.workspace }}/Backend/Backend
+          dotnet lambda deploy-function YourFunctionName --project-location .
  

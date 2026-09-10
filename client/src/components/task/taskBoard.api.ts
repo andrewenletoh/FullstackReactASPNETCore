@@ -29,6 +29,6 @@ export const updateTask = async (task: BackendTask) => {
     await axios.put(`${API_BASE_URL}/${task.id}`, task);
 };
 
-export const deleteTask = async (taskId: number) => {
+export const deleteTask = async (taskId: string) => {
     await axios.delete(`${API_BASE_URL}/${taskId}`);
 };

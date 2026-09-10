@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using MongoDB.Driver;
 
 using Backend.Models;
 
@@ -9,9 +9,9 @@ namespace Backend.Controllers;
 [ApiController]
 public class TasksController : ControllerBase
 {
-    private readonly AppDbContext _context;
+    private readonly MongoDBContext _context;
 
-    public TasksController(AppDbContext context)
+    public TasksController(MongoDBContext context)
     {
         _context = context;
     }
@@ -21,8 +21,7 @@ public class TasksController : ControllerBase
     {
         try
         {
-            _context.Tasks.Add(task);
-            await _context.SaveChangesAsync();
+            await _context.Tasks.InsertOneAsync(task);
             return CreatedAtRoute("GetTask", new { id = task.Id }, task); // 201 Created
             // status code + location of the resource (http://localhost:3000/api/tasks/{id})
             // + task object in the body
@@ -39,14 +38,11 @@ public class TasksController : ControllerBase
     {
         try
         {
-            var query = _context.Tasks.AsNoTracking();
+            var filter = status.HasValue
+                ? Builders<Models.Task>.Filter.Eq(t => t.Status, status.Value)
+                : Builders<Models.Task>.Filter.Empty;
 
-            if (status.HasValue)
-            {
-                query = query.Where(t => t.Status == status.Value);
-            }
-
-            var tasks = await query.ToListAsync();
+            var tasks = await _context.Tasks.Find(filter).ToListAsync();
             return Ok(tasks); // 200 Ok status code + task objects in the body
         }
         catch (Exception ex)
@@ -56,12 +52,12 @@ public class TasksController : ControllerBase
         }
     }
 
-    [HttpGet("{id:int}", Name = "GetTask")] // GET /api/tasks/{id}
-    public async Task<IActionResult> GetTask(int id)
+    [HttpGet("{id:string}", Name = "GetTask")] // GET /api/tasks/{id}
+    public async Task<IActionResult> GetTask(string id)
     {
         try
         {
-            var task = await _context.Tasks.FindAsync(id);
+            var task = await _context.Tasks.Find(t => t.Id == id).FirstOrDefaultAsync();
             if (task == null)
             {
                 return NotFound(); // 404 Not Found status code
@@ -75,8 +71,8 @@ public class TasksController : ControllerBase
         }
     }
 
-    [HttpPut("{id:int}")] // PUT /api/tasks/{id}
-    public async Task<IActionResult> UpdateTask(int id, [FromBody] Models.Task task)
+    [HttpPut("{id:string}")] // PUT /api/tasks/{id}
+    public async Task<IActionResult> UpdateTask(string id, [FromBody] Models.Task task)
     {
         try
         {
@@ -85,12 +81,11 @@ public class TasksController : ControllerBase
                 return BadRequest("ID in url and body mismatch"); // 400 Bad Request status code
                 // + message in the response body
             }
-            if (!await _context.Tasks.AnyAsync(t => t.Id == id))
+            var result = await _context.Tasks.ReplaceOneAsync(t => t.Id == id, task);
+            if (result.MatchedCount == 0)
             {
                 return NotFound(); // 404 Not Found status code
             }
-            _context.Tasks.Update(task);
-            await _context.SaveChangesAsync();
             return NoContent(); // 204 status code
         }
         catch (Exception ex)
@@ -100,18 +95,16 @@ public class TasksController : ControllerBase
         }
     }
 
-    [HttpDelete("{id:int}")] // DELETE /api/tasks/{id}
-    public async Task<IActionResult> DeleteTask(int id)
+    [HttpDelete("{id:string}")] // DELETE /api/tasks/{id}
+    public async Task<IActionResult> DeleteTask(string id)
     {
         try
         {
-            var task = await _context.Tasks.FindAsync(id);
-            if (task == null)
+            var result = await _context.Tasks.DeleteOneAsync(t => t.Id == id);
+            if (result.DeletedCount == 0)
             {
                 return NotFound(); // 404 Not Found status code
             }
-            _context.Tasks.Remove(task);
-            await _context.SaveChangesAsync();
             return NoContent(); // 204 status code
         }
         catch (Exception ex)
