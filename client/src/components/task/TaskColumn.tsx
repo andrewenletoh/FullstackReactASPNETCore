@@ -7,9 +7,9 @@ import type { TaskColumn as TaskColumnData } from './taskBoard.types';
 type TaskColumnProps = {
     column: TaskColumnData;
     onDrop: () => void;
-    onDragStart: (taskId: number) => void;
-    onDelete: (taskId: number) => void;
-    onEdit: (taskId: number, title: string, description: string) => Promise<void>;
+    onDragStart: (taskId: string) => void;
+    onDelete: (taskId: string) => void;
+    onEdit: (taskId: string, title: string, description: string) => Promise<void>;
     expandAll: boolean;
 };
 

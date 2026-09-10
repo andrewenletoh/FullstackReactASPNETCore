@@ -5,9 +5,9 @@ import type { ColumnMap } from './taskBoard.types';
 type TaskBoardProps = {
     columns: ColumnMap;
     onDrop: (columnId: string) => void;
-    onDragStart: (columnId: string, taskId: number) => void;
-    onDelete: (columnId: string, taskId: number) => void;
-    onEdit: (columnId: string, taskId: number, title: string, description: string) => Promise<void>;
+    onDragStart: (columnId: string, taskId: string) => void;
+    onDelete: (columnId: string, taskId: string) => void;
+    onEdit: (columnId: string, taskId: string, title: string, description: string) => Promise<void>;
     expandAll: boolean;
 };
 

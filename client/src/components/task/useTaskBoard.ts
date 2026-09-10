@@ -56,7 +56,7 @@ export function useTaskBoard() {
         }
     };
 
-    const removeTask = async (columnId: string, taskId: number) => {
+    const removeTask = async (columnId: string, taskId: string) => {
         try {
             await deleteTask(taskId);
             setColumns((currentColumns) => ({
@@ -72,7 +72,7 @@ export function useTaskBoard() {
         }
     };
 
-    const editTask = async (columnId: string, taskId: number, title: string, description: string) => {
+    const editTask = async (columnId: string, taskId: string, title: string, description: string) => {
         const currentTask = columns[columnId].tasks.find((task) => task.id === taskId);
         if (!currentTask) return;
 
@@ -93,7 +93,7 @@ export function useTaskBoard() {
         }
     };
 
-    const startDragging = (columnId: string, taskId: number) => {
+    const startDragging = (columnId: string, taskId: string) => {
         const task = columns[columnId].tasks.find((item) => item.id === taskId);
         if (task) setDraggedTask({ columnId, task });
     };
