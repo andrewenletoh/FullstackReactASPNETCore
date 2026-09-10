@@ -46,6 +46,7 @@ jobs:
 
       - name: Build
         run: |
+          cd ${{ github.workspace }}/client
           npm run build
 
       - name: Deploy to S3
