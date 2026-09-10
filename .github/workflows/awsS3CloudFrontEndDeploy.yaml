@@ -1,0 +1,55 @@
+name: Deploy to Amazon S3
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+  workflow_dispatch:
+        
+ 
+
+env:
+  BUCKET_NAME: arn:aws:s3:::react-dotnet-frontend-bucket
+  AWS_REGION: us-east-1
+
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  S3PackageUpload:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git clone the repository
+        uses: actions/checkout@v6
+        
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v6.2.4
+        with:
+          role-to-assume: arn:aws:iam::819352519261:role/github-actions-oidc-role
+          role-session-name: samplerolesession
+          aws-region: us-east-1
+
+      - name: Setup node npnm
+        uses: actions/setup-node@v7
+        with:
+          node-version: v24.x
+          
+      - name: Install dependencies
+        run: |
+          cd ${{ github.workspace }}/client
+          npm i
+
+      - name: Build
+        run: |
+          cd ${{ github.workspace }}/client
+          npm run build
+
+      - name: Deploy to S3
+        run: |
+          aws s3 cp ${{ github.workspace }}/client/dist s3://react-dotnet-frontend-bucket --recursive
+ 
