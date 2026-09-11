@@ -12,7 +12,7 @@ on:
  
 
 env:
-  BUCKET_NAME: arn:aws:s3:::portfolio-react-frontend-bucket
+  BUCKET_NAME: arn:aws:s3:::react-portfolio-frontend-bucket
   AWS_REGION: us-west-1
 
 
@@ -51,5 +51,5 @@ jobs:
 
       - name: Deploy to S3
         run: |
-          aws s3 cp ${{ github.workspace }}/client/dist s3://portfolio-react-frontend-bucket --recursive
+          aws s3 cp ${{ github.workspace }}/client/dist s3://react-portfolio-frontend-bucket --recursive
  
