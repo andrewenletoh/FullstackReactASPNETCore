@@ -52,7 +52,7 @@ public class TasksController : ControllerBase
         }
     }
 
-    [HttpGet("{id:string}", Name = "GetTask")] // GET /api/tasks/{id}
+    [HttpGet("{id}", Name = "GetTask")] // GET /api/tasks/{id}
     public async Task<IActionResult> GetTask(string id)
     {
         try
@@ -71,7 +71,7 @@ public class TasksController : ControllerBase
         }
     }
 
-    [HttpPut("{id:string}")] // PUT /api/tasks/{id}
+    [HttpPut("{id}")] // PUT /api/tasks/{id}
     public async Task<IActionResult> UpdateTask(string id, [FromBody] Models.Task task)
     {
         try
@@ -95,7 +95,7 @@ public class TasksController : ControllerBase
         }
     }
 
-    [HttpDelete("{id:string}")] // DELETE /api/tasks/{id}
+    [HttpDelete("{id}")] // DELETE /api/tasks/{id}
     public async Task<IActionResult> DeleteTask(string id)
     {
         try
