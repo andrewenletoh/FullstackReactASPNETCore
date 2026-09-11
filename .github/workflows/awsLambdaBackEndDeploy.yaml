@@ -8,13 +8,6 @@ on:
     branches:
       - master
   workflow_dispatch:
-        
- 
-
-env:
-  BUCKET_NAME: arn:aws:s3:::react-dotnet-frontend-bucket
-  AWS_REGION: us-east-1
-
 
 permissions:
   id-token: write
@@ -32,7 +25,7 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::819352519261:role/github-actions-oidc-role
           role-session-name: awsLambdaBackendDeploySession
-          aws-region: us-east-1
+          aws-region: us-west-2
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v6
@@ -53,5 +46,5 @@ jobs:
       - name: Deploy to lambda
         run: |
           cd ${{ github.workspace }}/Backend/Backend
-          dotnet lambda deploy-function dotnet-backend-lambda-test --project-location .
+          dotnet lambda deploy-function dotnet-backend-lambda --project-location .
  
