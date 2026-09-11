@@ -46,5 +46,5 @@ jobs:
       - name: Deploy to lambda
         run: |
           cd ${{ github.workspace }}/Backend/Backend
-          dotnet lambda deploy-function dotnet-backend-lambda --project-location .
+          dotnet lambda deploy-function dotnet-backend-lambda --project-location . --function-handler Backend
  
