@@ -506,3 +506,4 @@ dist-ssr
 *.sln
 *.sw?
 
+appsettings.development.json
