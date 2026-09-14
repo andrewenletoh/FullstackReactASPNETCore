@@ -25,7 +25,7 @@
     align-self: flex-end;
     margin: 1rem 1.5rem 0;
     color: var(--color-shadow-grey);
-    font-size: clamp(2.20rem, 5vw, 5rem);
+    font-size: var(--header-text-clamp);
     font-weight: 800;
     line-height: 1;
 }

@@ -76,7 +76,7 @@
 .projectsHeader1 {
     align-self: center;
     margin: 0 0 1.5rem;
-    font-size: clamp(2.20rem, 5vw, 5rem);
+    font-size: var(--header-text-clamp);
     color: var(--color-ghost-white);
     line-height: 1;
 }
