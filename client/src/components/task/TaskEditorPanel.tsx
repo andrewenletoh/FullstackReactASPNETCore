@@ -60,6 +60,7 @@ function TaskEditorPanel({
                     onChange={(event) => onNewTaskChange(event.target.value)}
                     placeholder="Add a new task..."
                     onKeyDown={(event) => event.key === 'Enter' && onAddTask()}
+                    aria-label="New task title"
                 />
                 <textarea
                     className={styles.descriptionContainer}
@@ -68,11 +69,13 @@ function TaskEditorPanel({
                     placeholder="Describe the task..."
                     maxLength={32767}
                     required
+                    aria-label="New task description"
                 />
                 <select
                     className={styles.columnSelect}
                     value={activeColumn}
                     onChange={(event) => onActiveColumnChange(event.target.value)}
+                    aria-label="Column"
                 >
                     {Object.keys(columns).map((columnId) => (
                         <option value={columnId} key={columnId}>
@@ -80,7 +83,12 @@ function TaskEditorPanel({
                         </option>
                     ))}
                 </select>
-                <button className={styles.addButton} onClick={onAddTask} disabled={isLoading} type="button">
+                <button
+                    className={styles.addButton}
+                    onClick={onAddTask}
+                    disabled={isLoading}
+                    type="button"
+                >
                     Add
                 </button>
             </div>

@@ -45,11 +45,11 @@
     gap: 0.5rem;
     margin-bottom: 0.75rem;
     padding: 0.65rem 1rem;
-    border: 1px solid rgb(71 91 99 / 0.16);
+    border: 1px solid oklch(0.4577 0.0277 224.25 / 0.16);
     border-radius: 0.5rem;
     color: var(--color-blue-slate);
-    background: rgb(255 250 255 / 0.78);
-    box-shadow: 0 1px 2px rgb(0 0 0 / 0.05);
+    background: oklch(0.9903 0.0084 325.64/ 0.78);
+    box-shadow: var(--box-shadow-black);
     cursor: pointer;
     transition: all 200ms ease;
 }
@@ -84,12 +84,12 @@
     text-align: right;
     margin: 1rem 1.5rem;
     color: var(--color-shadow-grey);
-    font-size: clamp(2.20rem, 5vw, 5rem);
+    font-size: var(--header-text-clamp);
     font-weight: 800;
     line-height: 1;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
     .taskLayout {
         display: flex;
         width: 100%;

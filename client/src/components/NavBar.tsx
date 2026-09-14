@@ -44,7 +44,10 @@ const Navbar = () => {
     }, [isMenuOpen]);
 
     return (
-        <header className={`${styles.header} ${isDarkBackground ? styles.darkBackground : ''}`}>
+        <header
+            className={`${styles.header}
+            ${isDarkBackground ? styles.darkBackground : ''}`}
+        >
             <div className={styles.bar}>
                 <div className={styles.content}>
                     {/* Home Icon */}
@@ -52,6 +55,7 @@ const Navbar = () => {
                         <NavLink
                             to='/'
                             className={({ isActive }) => `${styles.iconLink} ${isActive ? styles.hidden : ''}`}
+                            aria-label="Home"
                         >
                             <House className={styles.icon} aria-hidden="true" />
                         </NavLink>
@@ -59,29 +63,37 @@ const Navbar = () => {
 
                     <nav className={styles.centerSlot}>
                         {/* Desktop Navigation */}
-                        <nav className={styles.desktopNav}>
-                            <div className={styles.navLinks}>
-                                <NavLink
-                                    to='/tasks'
-                                    className={({ isActive }) => `${styles.navLink} ${isActive ? styles.active : ''}`}
-                                >
-                                    tasks
-                                </NavLink>
+                        <nav className={styles.desktopNav}
+                            aria-label="Primary"
+                        >
+                            <ul className={styles.navLinks}>
+                                <li>
+                                    <NavLink
+                                        to='/tasks'
+                                        className={({ isActive }) => `${styles.navLink} ${isActive ? styles.active : ''}`}
+                                    >
+                                        tasks
+                                    </NavLink>
+                                </li>
 
-                                <NavLink
-                                    to='/projects'
-                                    className={({ isActive }) => `${styles.navLink} ${isActive ? styles.active : ''}`}
-                                >
-                                    projects
-                                </NavLink>
+                                <li>
+                                    <NavLink
+                                        to='/projects'
+                                        className={({ isActive }) => `${styles.navLink} ${isActive ? styles.active : ''}`}
+                                    >
+                                        projects
+                                    </NavLink>
+                                </li>
 
-                                <NavLink
-                                    to='/agent'
-                                    className={({ isActive }) => `${styles.navLink} ${isActive ? styles.active : ''}`}
-                                >
-                                    agent
-                                </NavLink>
-                            </div>
+                                <li>
+                                    <NavLink
+                                        to='/agent'
+                                        className={({ isActive }) => `${styles.navLink} ${isActive ? styles.active : ''}`}
+                                    >
+                                        agent
+                                    </NavLink>
+                                </li>
+                            </ul>
                         </nav>
 
                         {/* Mobile menu button */}
@@ -90,44 +102,68 @@ const Navbar = () => {
                                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                                 className={styles.menuButton}
                                 aria-expanded={isMenuOpen}
+                                aria-controls="mobile-nav"
                             >
                                 <span className={styles.srOnly}>Open main menu</span>
                                 {isMenuOpen ? (
-                                    <X className={styles.mobileIcon} aria-hidden="true" />
+                                    <X
+                                        className={styles.mobileIcon}
+                                        aria-hidden="true"
+                                    />
                                 ) : (
-                                    <Menu className={styles.mobileIcon} aria-hidden="true" />
+                                    <Menu
+                                        className={styles.mobileIcon}
+                                        aria-hidden="true"
+                                    />
                                 )}
                             </button>
                         </div>
                     </nav>
 
-                    <div className={styles.socialLinks}>
-                        <a
-                            href="https://www.linkedin.com/in/andrew-toh-20126557/"
-                            target="_blank"
-                            className={styles.iconLink}
-                        >
-                            <Link className={styles.icon} aria-hidden="true" />
-                        </a>
-                        <a
-                            href="https://github.com/andrewenletoh?tab=repositories"
-                            target="_blank"
-                            className={styles.iconLink}
-                        >
-                            <BookMarked className={styles.icon} aria-hidden="true" />
-                        </a>
-                    </div>
+                    <ul className={styles.socialLinks}>
+                        <li>
+                            <a
+                                href="https://www.linkedin.com/in/andrew-toh-20126557/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={styles.iconLink}
+                                aria-label="LinkedIn profile"
+                            >
+                                <Link className={styles.icon} aria-hidden="true" />
+                            </a>
+                        </li>
+
+                        <li>
+                            <a
+                                href="https://github.com/andrewenletoh?tab=repositories"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={styles.iconLink}
+                                aria-label="GitHub repositories"
+                            >
+                                <BookMarked
+                                    className={styles.icon}
+                                    aria-hidden="true"
+                                />
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
 
             {/* Mobile Navigation Menu */}
-            <div
+            <nav
+                id="mobile-nav"
                 className={`${styles.mobileMenu} ${isMenuOpen ? styles.menuOpen : ''}`}
+                aria-label="Mobile"
+                aria-hidden={!isMenuOpen}
+
             >
                 <div className={styles.mobileMenuContent}>
                     <NavLink
                         to="/tasks"
                         className={({ isActive }) => `${styles.mobileNavLink} ${isActive ? styles.active : ''}`}
+                        tabIndex={isMenuOpen ? undefined : -1}
                     >
                         tasks
                     </NavLink>
@@ -135,6 +171,7 @@ const Navbar = () => {
                     <NavLink
                         to="/projects"
                         className={({ isActive }) => `${styles.mobileNavLink} ${isActive ? styles.active : ''}`}
+                        tabIndex={isMenuOpen ? undefined : -1}
                     >
                         projects
                     </NavLink>
@@ -142,11 +179,12 @@ const Navbar = () => {
                     <NavLink
                         to="/agent"
                         className={({ isActive }) => `${styles.mobileNavLink} ${isActive ? styles.active : ''}`}
+                        tabIndex={isMenuOpen ? undefined : -1}
                     >
                         agent
                     </NavLink>
                 </div>
-            </div>
+            </nav>
         </header>
     );
 };

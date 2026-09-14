@@ -24,28 +24,36 @@ function TaskColumn({ column, onDrop, onDragStart, onDelete, onEdit, expandAll }
             data-status={column.status}
             onDragOver={handleDragOver}
             onDrop={onDrop}
+            role="group"
+            aria-label={`${column.name} column`}
         >
-            <div className={styles.columnHeader}>
+            <h2 className={styles.columnHeader}>
                 {column.name}
-                <span className={styles.columnTaskCount}>{column.tasks.length}</span>
-            </div>
-            <div className={styles.columnBody}>
+                <span
+                    className={styles.columnTaskCount}
+                    aria-label={`${column.tasks.length} tasks`} >
+                    {column.tasks.length}
+                </span>
+            </h2>
+            <ul className={styles.columnBody}>
                 {column.tasks.length === 0 ? (
-                    <div className={styles.emptyColumn}>Drop Tasks Here</div>
+                    <li className={styles.emptyColumn}>Drop Tasks Here</li>
                 ) : (
                     column.tasks.map((task) => (
-                        <TaskCard
-                            key={task.id}
-                            task={task}
-                            onDragStart={() => onDragStart(task.id)}
-                            onDelete={() => onDelete(task.id)}
-                            onEdit={(title, description) => onEdit(task.id, title, description)}
-                            expandAll={expandAll}
-                        />
+                        <li key={task.id}>
+                            <TaskCard
+                                key={task.id}
+                                task={task}
+                                onDragStart={() => onDragStart(task.id)}
+                                onDelete={() => onDelete(task.id)}
+                                onEdit={(title, description) => onEdit(task.id, title, description)}
+                                expandAll={expandAll}
+                            />
+                        </li>
                     ))
                 )}
-            </div>
-        </div>
+            </ul>
+        </div >
     );
 }
 

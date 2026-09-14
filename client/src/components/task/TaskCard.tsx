@@ -50,16 +50,23 @@ function TaskCard({ task, onDragStart, onDelete, onEdit, expandAll }: TaskCardPr
     };
 
     return (
-        <div
+        <article
             className={styles.taskCard}
             draggable
             onDragStart={onDragStart}
             onDoubleClick={() => setExpanded(!isExpanded)}
+            aria-labelledby={`task-title-${task.id}`}
         >
-            <div className={styles.cardHeader}>{task.title}</div>
-            <div className={`${styles.expandedContent} ${isExpanded ? styles.expanded : ''}`}>
+            <h3 className={styles.cardHeader}>{task.title}</h3>
+            <div
+                className={`${styles.expandedContent}
+                ${isExpanded ? styles.expanded : ''}`}
+            >
                 {isEditing ? (
-                    <div className={styles.editFields} onDoubleClick={(event) => event.stopPropagation()}>
+                    <div
+                        className={styles.editFields}
+                        onDoubleClick={(event) => event.stopPropagation()}
+                    >
                         <input
                             className={styles.editInput}
                             value={editTitle}
@@ -74,11 +81,21 @@ function TaskCard({ task, onDragStart, onDelete, onEdit, expandAll }: TaskCardPr
                             aria-label="Task description"
                         />
                         <div className={styles.editActions}>
-                            <button className={styles.saveButton} type="button" onClick={() => void saveEditing()} disabled={isSaving}>
+                            <button
+                                className={styles.saveButton}
+                                type="button"
+                                onClick={() => void saveEditing()}
+                                disabled={isSaving}
+                            >
                                 <Save aria-hidden="true" />
                                 <span>{isSaving ? 'Saving...' : 'Save'}</span>
                             </button>
-                            <button className={styles.cancelEditButton} type="button" onClick={cancelEditing} disabled={isSaving}>
+                            <button
+                                className={styles.cancelEditButton}
+                                type="button"
+                                onClick={cancelEditing}
+                                disabled={isSaving}
+                            >
                                 <X aria-hidden="true" />
                                 <span>Cancel</span>
                             </button>
@@ -102,18 +119,41 @@ function TaskCard({ task, onDragStart, onDelete, onEdit, expandAll }: TaskCardPr
                                 <span>Edit</span>
                             </button>
                             {isDeleteWarningVisible ? (
-                                <div className={styles.deleteWarning} role="alert">
-                                    <AlertTriangle className={styles.warningIcon} aria-hidden="true" />
+                                <div
+                                    className={styles.deleteWarning}
+                                    role="alert"
+                                >
+                                    <AlertTriangle
+                                        className={styles.warningIcon}
+                                        aria-hidden="true"
+                                    />
                                     <span>Delete this task?</span>
-                                    <button className={styles.confirmDeleteButton} onClick={onDelete} type="button" aria-label="Confirm delete task" title="Delete task">
+                                    <button
+                                        className={styles.confirmDeleteButton}
+                                        onClick={onDelete}
+                                        type="button"
+                                        aria-label="Confirm delete task"
+                                        title="Delete task"
+                                    >
                                         <Check aria-hidden="true" />
                                     </button>
-                                    <button className={styles.cancelDeleteButton} onClick={() => setDeleteWarningVisible(false)} type="button" aria-label="Cancel delete task" title="Cancel">
+                                    <button
+                                        className={styles.cancelDeleteButton}
+                                        onClick={() => setDeleteWarningVisible(false)}
+                                        type="button" aria-label="Cancel delete task"
+                                        title="Cancel"
+                                    >
                                         <X aria-hidden="true" />
                                     </button>
                                 </div>
                             ) : (
-                                <button className={styles.deleteButton} onClick={() => setDeleteWarningVisible(true)} type="button" aria-label="Delete task" title="Delete task">
+                                <button
+                                    className={styles.deleteButton}
+                                    onClick={() => setDeleteWarningVisible(true)}
+                                    type="button"
+                                    aria-label="Delete task"
+                                    title="Delete task"
+                                >
                                     <Trash aria-hidden="true" />
                                 </button>
                             )}
@@ -121,7 +161,7 @@ function TaskCard({ task, onDragStart, onDelete, onEdit, expandAll }: TaskCardPr
                     </>
                 )}
             </div>
-        </div>
+        </article>
     );
 }
 

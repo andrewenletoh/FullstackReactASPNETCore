@@ -6,11 +6,6 @@
     height: 100vh;
 }
 
-.spacer {
-    width: 100vw;
-    aspect-ratio: 20 / 1;
-}
-
 .banner {
     display: flex;
     width: 100vw;

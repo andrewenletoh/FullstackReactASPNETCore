@@ -3,11 +3,11 @@
     flex-wrap: wrap;
     align-items: stretch;
     padding: 0;
-    border: 1px solid rgb(71 91 99 / 0.12);
+    border: 1px solid var(--color-blue-slate-opa012);
     border-radius: 0.5rem;
     color: var(--color-shadow-grey);
     background: var(--color-ghost-white);
-    box-shadow: 0 1px 2px rgb(0 0 0 / 0.05);
+    box-shadow: var(--box-shadow-black);
     cursor: move;
     transition: all 200ms ease;
 }
@@ -21,6 +21,7 @@
     display: flex;
     width: 100%;
     min-width: 0;
+    margin: 0;
     align-items: center;
     padding: 1rem;
     border-radius: 0.45rem 0.45rem 0 0;
@@ -63,7 +64,7 @@
     align-items: center;
     gap: 0.4rem;
     padding: 0.45rem 0.75rem;
-    border: 1px solid rgb(71 91 99 / 0.2);
+    border: 1px solid var(--color-blue-slate-opa020);
     border-radius: 0.375rem;
     color: var(--color-blue-slate);
     background: transparent;
@@ -107,11 +108,11 @@
     align-items: center;
     gap: 0.35rem;
     padding: 0.35rem 0.5rem;
-    border: 1px solid rgb(255 94 91 / 0.35);
+    border: 1px solid var(--color-vibrant-coral-opa035);
     border-radius: 0.375rem;
     color: var(--color-vibrant-coral);
     font-size: 0.8rem;
-    background: rgb(255 94 91 / 0.1);
+    background: var(--color-vibrant-coral-opa010);
 }
 
 .warningIcon {
@@ -187,7 +188,7 @@
 .editDescription {
     width: 100%;
     padding: 0.65rem 0.75rem;
-    border: 1px solid rgb(71 91 99 / 0.2);
+    border: 1px solid var(--color-blue-slate-opa020);
     border-radius: 0.375rem;
     color: var(--color-shadow-grey);
     font: inherit;
@@ -225,7 +226,7 @@
 
 .cancelEditButton {
     color: var(--color-blue-slate);
-    background: rgb(71 91 99 / 0.1);
+    background: var(--color-blue-slate-opa010);
 }
 
 .saveButton:hover,

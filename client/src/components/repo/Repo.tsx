@@ -67,38 +67,39 @@ function GitRepos({ userName, numOfrepos, showLanguage }: {
     const sortedRepos = sortByMostRecentDate(repoData)
     const sortedAndReducedRepos = arrayToLength(sortedRepos, numOfrepos)
     return (
-        <div className={styles.repoGrid}>
+        <ul className={styles.repoGrid}>
             {sortedAndReducedRepos
                 ? sortedAndReducedRepos.map((repo) => (
-                    <a
-                        className={styles.repoTile}
-                        key={repo.id}
-                        href={repo.html_url}
-                        target='_blank'
-                        rel='noopener noreferrer'
-                    >
-                        <span className={styles.repoTitle}>
-                            {removeDash(repo.name)}
-                        </span>
-                        <p className={styles.repoDescription}>
-                            {repo.description || 'No description provided.'}
-                        </p>
-                        <div className={styles.repoFooter}>
-                            {showLanguage ? (
-                                <span className={styles.repoLanguage}>
-                                    {repo.language}
-                                </span>
-                            ) : null}
-                            <p className={styles.repoUpdated}>
-                                updated {convertToHours(
-                                    getRemainingSeconds(new Date(repo.updated_at).getTime(), Date.now())
-                                )}
+                    <li key={repo.id}>
+                        <a
+                            className={styles.repoTile}
+                            href={repo.html_url}
+                            target='_blank'
+                            rel='noopener noreferrer'
+                        >
+                            <span className={styles.repoTitle}>
+                                {removeDash(repo.name)}
+                            </span>
+                            <p className={styles.repoDescription}>
+                                {repo.description || 'No description provided.'}
                             </p>
-                        </div>
-                    </a>
+                            <div className={styles.repoFooter}>
+                                {showLanguage ? (
+                                    <span className={styles.repoLanguage}>
+                                        {repo.language}
+                                    </span>
+                                ) : null}
+                                <p className={styles.repoUpdated}>
+                                    updated {convertToHours(
+                                        getRemainingSeconds(new Date(repo.updated_at).getTime(), Date.now())
+                                    )}
+                                </p>
+                            </div>
+                        </a>
+                    </li>
                 ))
                 : null}
-        </div>
+        </ul>
     )
 }
 

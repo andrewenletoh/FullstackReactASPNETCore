@@ -26,10 +26,17 @@ const TasksPage: React.FC = () => {
     } = useTaskBoard();
 
     return (
-        <div className={styles.page}>
-            <header className={styles.spacer} />
-            <div className={styles.content}>
-                <div className={`${styles.taskLayout} ${isEditorPanelOpen ? '' : styles.panelCollapsed}`}>
+        <main className={styles.page}>
+            <div
+                className={styles.spacer}
+                aria-hidden="true"
+            />
+            <section className={styles.content}>
+                <div
+                    className={`${styles.taskLayout}
+                    ${isEditorPanelOpen ? '' : styles.panelCollapsed}`}
+                >
+                    <h1 className={styles.header}>Tasks</h1>
                     <aside className={styles.editorRail}>
                         <button
                             className={styles.expandAllButton}
@@ -56,7 +63,6 @@ const TasksPage: React.FC = () => {
                             onAddTask={() => void addNewTask()}
                         />
                     </aside>
-                    <h1 className={styles.header}>Tasks</h1>
                     <TaskBoard
                         columns={columns}
                         expandAll={expandAll}
@@ -66,8 +72,8 @@ const TasksPage: React.FC = () => {
                         onEdit={(columnId, taskId, title, description) => editTask(columnId, taskId, title, description)}
                     />
                 </div>
-            </div>
-        </div>
+            </section>
+        </main>
     )
 }
 

@@ -3,16 +3,22 @@ import GitRepos from '../components/repo/Repo';
 
 const ProjectsPage: React.FC = () => {
     return (
-        <div className={styles.page}>
-            <header className={styles.spacer} />
-            <main className={styles.content}>
+        <main className={styles.page}>
+            <div
+                className={styles.spacer}
+                aria-hidden="true"
+            />
+            <section className={styles.content}>
                 <h1 className={styles.header}>Projects</h1>
                 <div className={styles.reposContainer}>
-                    <GitRepos userName="andrewenletoh" numOfrepos={3} showLanguage={true} />
+                    <GitRepos
+                        userName="andrewenletoh"
+                        numOfrepos={3}
+                        showLanguage={true}
+                    />
                 </div>
-
-            </main>
-        </div>
+            </section>
+        </main>
     )
 }
 
