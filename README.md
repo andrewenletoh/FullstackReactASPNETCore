@@ -4,13 +4,33 @@ Portfolio website to showcase working knowledge and implementation of a Vite&Rea
 
 # Introduction
 
-To Do
+This is a small side project for me to put my other projects somewhere on display, while also trying out a new stack that I'm unfamiliar with.
 
 # Architecture
+
+## Vite/React Frontend
+
+To Do
+
+## ASP.NET Core Backend
+
+To Do
+
+## MongoDB
 
 To Do
 
 # AWS Infrastructure & Deployment
+
+## S3 Bucket
+
+To Do
+
+## Lambda Function
+
+To Do
+
+## Cloudfront
 
 To Do
 
