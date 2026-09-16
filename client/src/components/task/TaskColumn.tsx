@@ -11,9 +11,10 @@ type TaskColumnProps = {
     onDelete: (taskId: string) => void;
     onEdit: (taskId: string, title: string, description: string) => Promise<void>;
     expandAll: boolean;
+    readOnly: boolean;
 };
 
-function TaskColumn({ column, onDrop, onDragStart, onDelete, onEdit, expandAll }: TaskColumnProps) {
+function TaskColumn({ column, onDrop, onDragStart, onDelete, onEdit, expandAll, readOnly }: TaskColumnProps) {
     const handleDragOver = (event: DragEvent<HTMLDivElement>) => {
         event.preventDefault();
     };
@@ -22,8 +23,8 @@ function TaskColumn({ column, onDrop, onDragStart, onDelete, onEdit, expandAll }
         <div
             className={styles.column}
             data-status={column.status}
-            onDragOver={handleDragOver}
-            onDrop={onDrop}
+            onDragOver={readOnly ? undefined : handleDragOver}
+            onDrop={readOnly ? undefined : onDrop}
             role="group"
             aria-label={`${column.name} column`}
         >
@@ -48,6 +49,7 @@ function TaskColumn({ column, onDrop, onDragStart, onDelete, onEdit, expandAll }
                                 onDelete={() => onDelete(task.id)}
                                 onEdit={(title, description) => onEdit(task.id, title, description)}
                                 expandAll={expandAll}
+                                readOnly={readOnly}
                             />
                         </li>
                     ))

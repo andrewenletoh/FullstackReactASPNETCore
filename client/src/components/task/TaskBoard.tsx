@@ -9,9 +9,10 @@ type TaskBoardProps = {
     onDelete: (columnId: string, taskId: string) => void;
     onEdit: (columnId: string, taskId: string, title: string, description: string) => Promise<void>;
     expandAll: boolean;
+    readOnly: boolean;
 };
 
-function TaskBoard({ columns, onDrop, onDragStart, onDelete, onEdit, expandAll }: TaskBoardProps) {
+function TaskBoard({ columns, onDrop, onDragStart, onDelete, onEdit, expandAll, readOnly }: TaskBoardProps) {
     return (
         <div className={styles.taskDashboard}>
             <div className={styles.taskBoardInteractContainer}>
@@ -25,6 +26,7 @@ function TaskBoard({ columns, onDrop, onDragStart, onDelete, onEdit, expandAll }
                             onDelete={(taskId) => onDelete(columnId, taskId)}
                             onEdit={(taskId, title, description) => onEdit(columnId, taskId, title, description)}
                             expandAll={expandAll}
+                            readOnly={readOnly}
                         />
                     ))}
                 </div>

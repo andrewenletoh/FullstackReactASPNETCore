@@ -10,9 +10,10 @@ type TaskCardProps = {
     onDelete: () => void;
     onEdit: (title: string, description: string) => Promise<void>;
     expandAll: boolean;
+    readOnly: boolean;
 };
 
-function TaskCard({ task, onDragStart, onDelete, onEdit, expandAll }: TaskCardProps) {
+function TaskCard({ task, onDragStart, onDelete, onEdit, expandAll, readOnly }: TaskCardProps) {
     const [isDeleteWarningVisible, setDeleteWarningVisible] = useState(false);
     const [isExpanded, setExpanded] = useState(false);
     const [isEditing, setEditing] = useState(false);
@@ -52,8 +53,8 @@ function TaskCard({ task, onDragStart, onDelete, onEdit, expandAll }: TaskCardPr
     return (
         <article
             className={styles.taskCard}
-            draggable
-            onDragStart={onDragStart}
+            draggable={!readOnly}
+            onDragStart={readOnly ? undefined : onDragStart}
             onDoubleClick={() => setExpanded(!isExpanded)}
             aria-labelledby={`task-title-${task.id}`}
         >
@@ -104,60 +105,62 @@ function TaskCard({ task, onDragStart, onDelete, onEdit, expandAll }: TaskCardPr
                 ) : (
                     <>
                         <p className={styles.description}>{task.description || 'No description provided.'}</p>
-                        <div className={styles.detailActions}>
-                            <button
-                                className={styles.editButton}
-                                type="button"
-                                onClick={(event) => {
-                                    event.stopPropagation();
-                                    startEditing();
-                                }}
-                                aria-label={`Edit ${task.title}`}
-                                title="Edit task"
-                            >
-                                <Edit3 aria-hidden="true" />
-                                <span>Edit</span>
-                            </button>
-                            {isDeleteWarningVisible ? (
-                                <div
-                                    className={styles.deleteWarning}
-                                    role="alert"
+                        {!readOnly && (
+                            <div className={styles.detailActions}>
+                                <button
+                                    className={styles.editButton}
+                                    type="button"
+                                    onClick={(event) => {
+                                        event.stopPropagation();
+                                        startEditing();
+                                    }}
+                                    aria-label={`Edit ${task.title}`}
+                                    title="Edit task"
                                 >
-                                    <AlertTriangle
-                                        className={styles.warningIcon}
-                                        aria-hidden="true"
-                                    />
-                                    <span>Delete this task?</span>
+                                    <Edit3 aria-hidden="true" />
+                                    <span>Edit</span>
+                                </button>
+                                {isDeleteWarningVisible ? (
+                                    <div
+                                        className={styles.deleteWarning}
+                                        role="alert"
+                                    >
+                                        <AlertTriangle
+                                            className={styles.warningIcon}
+                                            aria-hidden="true"
+                                        />
+                                        <span>Delete this task?</span>
+                                        <button
+                                            className={styles.confirmDeleteButton}
+                                            onClick={onDelete}
+                                            type="button"
+                                            aria-label="Confirm delete task"
+                                            title="Delete task"
+                                        >
+                                            <Check aria-hidden="true" />
+                                        </button>
+                                        <button
+                                            className={styles.cancelDeleteButton}
+                                            onClick={() => setDeleteWarningVisible(false)}
+                                            type="button" aria-label="Cancel delete task"
+                                            title="Cancel"
+                                        >
+                                            <X aria-hidden="true" />
+                                        </button>
+                                    </div>
+                                ) : (
                                     <button
-                                        className={styles.confirmDeleteButton}
-                                        onClick={onDelete}
+                                        className={styles.deleteButton}
+                                        onClick={() => setDeleteWarningVisible(true)}
                                         type="button"
-                                        aria-label="Confirm delete task"
+                                        aria-label="Delete task"
                                         title="Delete task"
                                     >
-                                        <Check aria-hidden="true" />
+                                        <Trash aria-hidden="true" />
                                     </button>
-                                    <button
-                                        className={styles.cancelDeleteButton}
-                                        onClick={() => setDeleteWarningVisible(false)}
-                                        type="button" aria-label="Cancel delete task"
-                                        title="Cancel"
-                                    >
-                                        <X aria-hidden="true" />
-                                    </button>
-                                </div>
-                            ) : (
-                                <button
-                                    className={styles.deleteButton}
-                                    onClick={() => setDeleteWarningVisible(true)}
-                                    type="button"
-                                    aria-label="Delete task"
-                                    title="Delete task"
-                                >
-                                    <Trash aria-hidden="true" />
-                                </button>
-                            )}
-                        </div>
+                                )}
+                            </div>
+                        )}
                     </>
                 )}
             </div>
