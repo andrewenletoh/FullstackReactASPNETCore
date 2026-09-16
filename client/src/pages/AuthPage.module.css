@@ -33,3 +33,109 @@
 .reposContainer {
     width: 50%;
 }
+
+.card {
+    display: flex;
+    width: min(24rem, 92vw);
+    flex-direction: column;
+    gap: 1.25rem;
+    padding: 2rem;
+    border: 1px solid var(--color-blue-slate-opa012);
+    border-radius: 0.75rem;
+    background: var(--color-frozen-water-opa042);
+    box-shadow: var(--box-shadow-black);
+}
+
+.title {
+    margin: 0;
+    color: var(--color-shadow-grey);
+    font-size: 1.75rem;
+    font-weight: 800;
+    line-height: 1.1;
+}
+
+.subtitle {
+    margin: 0;
+    color: var(--color-blue-slate);
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.label {
+    color: var(--color-blue-slate);
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--color-blue-slate-opa012);
+    border-radius: 0.5rem;
+    color: var(--color-shadow-grey);
+    background: var(--color-ghost-white);
+}
+
+.input:focus-visible {
+    outline: 2px solid var(--color-tropical-teal);
+    outline-offset: 2px;
+}
+
+.error {
+    color: var(--color-vibrant-coral);
+    font-size: 0.8rem;
+}
+
+.submit {
+    width: 100%;
+    padding: 0.75rem 1.5rem;
+    border: 0;
+    border-radius: 9999px;
+    color: var(--color-ghost-white);
+    background: var(--color-vibrant-coral);
+    cursor: pointer;
+    transition: all 200ms ease;
+}
+
+.submit:hover:not(:disabled) {
+    background: var(--color-tropical-teal);
+    transform: translateY(-1px);
+}
+
+.submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.switch {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--color-blue-slate);
+    font-size: 0.85rem;
+    text-decoration: underline;
+    cursor: pointer;
+    align-self: center;
+}
+
+.switch:hover {
+    color: var(--color-tropical-teal);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .submit {
+        transition: none;
+    }
+}

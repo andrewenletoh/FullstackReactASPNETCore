@@ -1,11 +1,13 @@
-import { BookMarked, House, Menu, Link, X } from 'lucide-react';
+import { BookMarked, House, Menu, Link, LogIn, LogOut, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import styles from './NavBar.module.css';
 import { NavLink } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isDarkBackground, setIsDarkBackground] = useState(false);
+    const { user, logout } = useAuth();
 
     useEffect(() => {
         const updateNavbarTheme = () => {
@@ -147,6 +149,31 @@ const Navbar = () => {
                                 />
                             </a>
                         </li>
+                        <li>
+                            {user ? (
+                                <button
+                                    type="button"
+                                    onClick={() => logout()}
+                                    className={styles.iconLink}
+                                    aria-label={`Sign out (${user.username})`}
+                                    title={`Sign out (${user.username})`}
+                                >
+                                    <LogOut className={styles.icon} aria-hidden="true" />
+                                </button>
+                            ) : (
+                                <NavLink
+                                    to="/auth"
+                                    className={styles.iconLink}
+                                    aria-label="Sign in"
+                                    title="Sign in"
+                                >
+                                    <LogIn className={styles.icon} aria-hidden="true" />
+                                </NavLink>
+                            )}
+
+                        </li>
+
+
                     </ul>
                 </div>
             </div>
