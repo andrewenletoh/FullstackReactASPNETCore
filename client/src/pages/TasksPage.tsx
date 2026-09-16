@@ -1,5 +1,6 @@
 import TaskBoard from "../components/task/TaskBoard";
 import TaskEditorPanel from "../components/task/TaskEditorPanel";
+import { useAuth } from "../context/AuthContext";
 import { useTaskBoard } from "../components/task/useTaskBoard";
 import { ChevronsDownUp } from 'lucide-react';
 import { useState } from 'react';
@@ -7,6 +8,7 @@ import styles from './TasksPage.module.css';
 
 const TasksPage: React.FC = () => {
     const [expandAll, setExpandAll] = useState(false);
+    const { user } = useAuth();
     const {
         columns,
         newTask,
@@ -49,7 +51,7 @@ const TasksPage: React.FC = () => {
                             <ChevronsDownUp aria-hidden="true" />
                             <span>{expandAll ? 'Collapse all' : 'Expand all'}</span>
                         </button>
-                        <TaskEditorPanel
+                        {user ? <TaskEditorPanel
                             columns={columns}
                             newTask={newTask}
                             newTaskDescription={newTaskDescription}
@@ -61,7 +63,7 @@ const TasksPage: React.FC = () => {
                             onActiveColumnChange={setActiveColumn}
                             onToggle={() => setEditorPanelOpen(!isEditorPanelOpen)}
                             onAddTask={() => void addNewTask()}
-                        />
+                        /> : null}
                     </aside>
                     <TaskBoard
                         columns={columns}
