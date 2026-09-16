@@ -72,6 +72,7 @@ const TasksPage: React.FC = () => {
                         onDragStart={startDragging}
                         onDelete={(columnId, taskId) => void removeTask(columnId, taskId)}
                         onEdit={(columnId, taskId, title, description) => editTask(columnId, taskId, title, description)}
+                        readOnly={!user}
                     />
                 </div>
             </section>
