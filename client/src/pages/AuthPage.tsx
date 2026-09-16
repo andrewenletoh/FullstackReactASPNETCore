@@ -55,7 +55,6 @@ const AuthPage = () => {
 
     return (
         <div className={styles.page}>
-            <header className={styles.spacer} />
             <div className={styles.content}>
                 <div className={styles.card}>
                     <h1 className={styles.title}>{mode === 'login' ? 'Welcome back' : 'Create an account'}</h1>
@@ -99,9 +98,9 @@ const AuthPage = () => {
                         </button>
                     </form>
 
-                    <button className={styles.switch} type="button" onClick={switchMode}>
+                    {/* <button className={styles.switch} type="button" onClick={switchMode}>
                         {mode === 'login' ? "Don't have an account? Register" : 'Already have an account? Sign in'}
-                    </button>
+                    </button> */}
                 </div>
             </div>
         </div>
