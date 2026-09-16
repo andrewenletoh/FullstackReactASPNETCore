@@ -64,7 +64,7 @@ const AuthPage = () => {
                             : 'Set up an account to start tracking tasks.'}
                     </p>
 
-                    <form className={styles.form} onSubmit={handleSubmit(onSubmit)} noValidate>
+                    <form key={mode} className={styles.form} onSubmit={handleSubmit(onSubmit)} noValidate>
                         <label className={styles.field}>
                             <span className={styles.label}>Username</span>
                             <input
