@@ -7,20 +7,24 @@ import ProjectsPage from './pages/ProjectsPage'
 import AuthPage from './pages/AuthPage'
 import NotFoundPage from './pages/NotFoundPage'
 import { Toaster } from 'react-hot-toast'
+import { AuthProvider } from './context/AuthContext'
+import ProtectedRoute from './components/ProtectedRoute'
 
 const App: React.FC = () => {
   return (
-    <>
+    <AuthProvider>
       <Navbar />
       <Routes>
         <Route index element={<HomePage />} />
-        <Route path="tasks" element={<TasksPage />} />
-        <Route path="projects" element={<ProjectsPage />} />
-        <Route path="*" element={<NotFoundPage />} />
         <Route path="auth" element={<AuthPage />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="tasks" element={<TasksPage />} />
+          <Route path="projects" element={<ProjectsPage />} />
+        </Route>
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <Toaster />
-    </>
+    </AuthProvider>
   )
 }
 
