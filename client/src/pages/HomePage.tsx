@@ -18,7 +18,7 @@ const HomePage: React.FC = () => {
                         <br />
                         Toh
                     </h1>
-                    <h2 className={styles.introHeader2}>Software Slave | AI Chattel</h2>
+                    <h2 className={styles.introHeader2}>Software Engineer | Working with Machines</h2>
                     <p className={styles.introText}> I throw all my random stuff here.</p>
                 </div>
                 <div
