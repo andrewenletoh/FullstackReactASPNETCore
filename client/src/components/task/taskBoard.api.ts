@@ -1,4 +1,4 @@
-import { apiClient } from '../../lib/apiclient';
+import { apiClient } from '../../lib/apiClient';
 
 import type { BackendTask } from './taskBoard.types';
 
