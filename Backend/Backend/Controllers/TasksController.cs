@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
 
@@ -17,6 +18,7 @@ public class TasksController : ControllerBase
     }
 
     [HttpPost] // POST /api/tasks
+    [Authorize(Roles = Roles.Admin)]
     public async Task<IActionResult> AddTask(Models.Task task)
     {
         try
@@ -72,6 +74,7 @@ public class TasksController : ControllerBase
     }
 
     [HttpPut("{id}")] // PUT /api/tasks/{id}
+    [Authorize(Roles = Roles.Admin)]
     public async Task<IActionResult> UpdateTask(string id, [FromBody] Models.Task task)
     {
         try
@@ -96,6 +99,7 @@ public class TasksController : ControllerBase
     }
 
     [HttpDelete("{id}")] // DELETE /api/tasks/{id}
+    [Authorize(Roles = Roles.Admin)]
     public async Task<IActionResult> DeleteTask(string id)
     {
         try
