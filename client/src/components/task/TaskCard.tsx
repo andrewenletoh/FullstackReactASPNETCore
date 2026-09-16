@@ -105,7 +105,7 @@ function TaskCard({ task, onDragStart, onDelete, onEdit, expandAll, readOnly }: 
                 ) : (
                     <>
                         <p className={styles.description}>{task.description || 'No description provided.'}</p>
-                        {!readOnly && (
+                        {!readOnly ? (
                             <div className={styles.detailActions}>
                                 <button
                                     className={styles.editButton}
@@ -160,7 +160,7 @@ function TaskCard({ task, onDragStart, onDelete, onEdit, expandAll, readOnly }: 
                                     </button>
                                 )}
                             </div>
-                        )}
+                        ) : null}
                     </>
                 )}
             </div>
