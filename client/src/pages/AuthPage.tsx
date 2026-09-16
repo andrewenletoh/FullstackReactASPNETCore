@@ -48,10 +48,10 @@ const AuthPage = () => {
         }
     };
 
-    const switchMode = () => {
-        setMode((current) => (current === 'login' ? 'register' : 'login'));
-        reset();
-    };
+    // const switchMode = () => {
+    //     setMode((current) => (current === 'login' ? 'register' : 'login'));
+    //     reset();
+    // };
 
     return (
         <div className={styles.page}>
