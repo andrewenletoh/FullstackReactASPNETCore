@@ -18,7 +18,7 @@ public class TasksController : ControllerBase
     }
 
     [HttpPost] // POST /api/tasks
-    [Authorize]
+    [Authorize(Roles = Roles.Admin)]
     public async Task<IActionResult> AddTask(Models.Task task)
     {
         try
@@ -74,7 +74,7 @@ public class TasksController : ControllerBase
     }
 
     [HttpPut("{id}")] // PUT /api/tasks/{id}
-    [Authorize]
+    [Authorize(Roles = Roles.Admin)]
     public async Task<IActionResult> UpdateTask(string id, [FromBody] Models.Task task)
     {
         try
@@ -99,7 +99,7 @@ public class TasksController : ControllerBase
     }
 
     [HttpDelete("{id}")] // DELETE /api/tasks/{id}
-    [Authorize]
+    [Authorize(Roles = Roles.Admin)]
     public async Task<IActionResult> DeleteTask(string id)
     {
         try
