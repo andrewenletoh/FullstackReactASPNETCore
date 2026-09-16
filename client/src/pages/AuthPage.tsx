@@ -48,10 +48,10 @@ const AuthPage = () => {
         }
     };
 
-    // const switchMode = () => {
-    //     setMode((current) => (current === 'login' ? 'register' : 'login'));
-    //     reset();
-    // };
+    const switchMode = () => {
+        setMode((current) => (current === 'login' ? 'register' : 'login'));
+        reset();
+    };
 
     return (
         <div className={styles.page}>
@@ -98,9 +98,9 @@ const AuthPage = () => {
                         </button>
                     </form>
 
-                    {/* <button className={styles.switch} type="button" onClick={switchMode}>
+                    <button className={styles.switch} type="button" onClick={switchMode}>
                         {mode === 'login' ? "Don't have an account? Register" : 'Already have an account? Sign in'}
-                    </button> */}
+                    </button>
                 </div>
             </div>
         </div>
