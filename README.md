@@ -4,7 +4,7 @@ Portfolio website to showcase working knowledge and implementation of a Vite&Rea
 
 # Introduction
 
-This is a small side project for me to put my other projects somewhere on display, while also trying out a new stack that I'm unfamiliar with. Still adding stuff to it. I'm using this project kind of as a sandbox.
+This is a small side project for me to put my other projects somewhere on display, while also trying out a new backend that I'm unfamiliar with. Still adding stuff to it. I'm using this project kind of as a sandbox.
 
 # Architecture
 
