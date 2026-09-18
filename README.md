@@ -69,4 +69,4 @@ Two workflows, both trigger on push/PR to master, both auth to AWS via OIDC (no 
 - `awsS3CloudFrontEndDeploy.yaml` - installs npm deps, builds the Vite app, syncs `dist` to the S3 bucket, then invalidates the CloudFront cache so the new build actually shows up instead of a stale cached version
 - `awsLambdaBackEndDeploy.yaml` - restores and builds the .NET project, installs the Amazon Lambda Tools CLI, then runs `dotnet lambda deploy-function` to push the new build straight to Lambda
 
-Push to master and both fire off independently, so the frontend and backend can ship on their own without waiting on each other. Eventually, I have to figure out if I can fire off only one at a time based on what parts of the repo are updated.
+Push to master and both fire off independently, so the frontend and backend can ship on their own without waiting on each other.
