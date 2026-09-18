@@ -29,7 +29,7 @@ Colors, spacing, and type all pull from a shared set of CSS variables in one pla
 
 ## ASP.NET Core Backend
 
-.NET 10 Web API, running inside Lambda through `Amazon.Lambda.AspNetCoreServer.Hosting`. Two controllers for now: `TasksController` for the basic CRUD task board, and `AuthController` for register/login/refresh/logout.
+.NET 10 Web API, running inside Lambda through `Amazon.Lambda.AspNetCoreServer.Hosting`. Two controllers for now: `TasksController` for the basic CRUD task board, and `AuthController` for login/refresh/logout.
 
 Auth is JWT-based but the tokens never touch localStorage or JS, issued as HttpOnly cookies:
 
