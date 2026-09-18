@@ -98,9 +98,9 @@ const AuthPage = () => {
                         </button>
                     </form>
 
-                    {/* <button className={styles.switch} type="button" onClick={switchMode}>
+                    <button disabled className={styles.switch} type="button" onClick={switchMode}>
                         {mode === 'login' ? "Don't have an account? Register" : 'Already have an account? Sign in'}
-                    </button> */}
+                    </button>
                 </div>
             </div>
         </div>
