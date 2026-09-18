@@ -11,7 +11,7 @@ export interface LoginPayload {
     password: string;
 }
 
-export interface RegisterPayload {
-    username: string;
-    password: string;
-}
+// export interface RegisterPayload {
+//     username: string;
+//     password: string;
+// }

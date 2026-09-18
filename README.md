@@ -10,7 +10,7 @@ This is a small side project for me to put my other projects somewhere on displa
 
 ## Vite/React Frontend
 
-React 19 with TypeScript, bundled with Vite. React-hook-form for the login/register form.
+React 19 with TypeScript, bundled with Vite. React-hook-form for the login form.
 
 The frontend talks to the backend through a single axios instance (`apiClient.ts`) rather than the default axios import for authentication and authorization. It's configured with `withCredentials: true` so the auth cookies actually get sent, and it has two interceptors bolted on:
 

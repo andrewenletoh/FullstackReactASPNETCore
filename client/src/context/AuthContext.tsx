@@ -1,14 +1,14 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
 
-import { fetchCurrentUser, loginUser, logoutUser, registerUser } from '../services/auth.api';
-import type { AuthUser, LoginPayload, RegisterPayload } from '../types/auth';
+import { fetchCurrentUser, loginUser, logoutUser/*, registerUser*/ } from '../services/auth.api';
+import type { AuthUser, LoginPayload/*, RegisterPayload*/ } from '../types/auth';
 
 interface AuthContextValue {
     user: AuthUser | null;
     isLoading: boolean;
     login: (payload: LoginPayload) => Promise<void>;
-    register: (payload: RegisterPayload) => Promise<void>;
+    /*register: (payload: RegisterPayload) => Promise<void>;*/
     logout: () => Promise<void>;
 }
 
@@ -50,10 +50,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setUser(loggedInUser);
     }, []);
 
-    const register = useCallback(async (payload: RegisterPayload) => {
-        const newUser = await registerUser(payload);
-        setUser(newUser);
-    }, []);
+    // const register = useCallback(async (payload: RegisterPayload) => {
+    //     const newUser = await registerUser(payload);
+    //     setUser(newUser);
+    // }, []);
 
     const logout = useCallback(async () => {
         try {
@@ -66,8 +66,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     // useMemo poops out all these values as one object, so components consuming AuthContext don't
     // rerender on every provider render, only when something in 'value' changes
     const value = useMemo(
-        () => ({ user, isLoading, login, register, logout }),
-        [user, isLoading, login, register, logout]
+        () => ({ user, isLoading, login,/* register,*/ logout }),
+        [user, isLoading, login,/* register,*/ logout]
     );
 
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

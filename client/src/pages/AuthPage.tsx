@@ -19,7 +19,7 @@ interface LocationState {
 
 const AuthPage = () => {
     const [mode, setMode] = useState<Mode>('login');
-    const { login, register: registerAccount } = useAuth();
+    const { login/*, register: registerAccount*/ } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -37,7 +37,7 @@ const AuthPage = () => {
             if (mode === 'login') {
                 await login(values);
             } else {
-                await registerAccount(values);
+                // await registerAccount(values);
             }
             navigate(redirectTo, { replace: true });
         } catch (error) {
@@ -98,9 +98,9 @@ const AuthPage = () => {
                         </button>
                     </form>
 
-                    <button className={styles.switch} type="button" onClick={switchMode}>
+                    {/* <button className={styles.switch} type="button" onClick={switchMode}>
                         {mode === 'login' ? "Don't have an account? Register" : 'Already have an account? Sign in'}
-                    </button>
+                    </button> */}
                 </div>
             </div>
         </div>
