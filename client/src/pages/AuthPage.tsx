@@ -98,7 +98,8 @@ const AuthPage = () => {
                         </button>
                     </form>
 
-                    <button disabled className={styles.switch} type="button" onClick={switchMode}>
+                    {/* hidden for now until use case for account registry is needed */}
+                    <button disabled hidden className={styles.switch} type="button" onClick={switchMode}>
                         {mode === 'login' ? "Don't have an account? Register" : 'Already have an account? Sign in'}
                     </button>
                 </div>
