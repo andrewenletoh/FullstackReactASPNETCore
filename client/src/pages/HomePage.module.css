@@ -25,14 +25,18 @@
 }
 
 .terminalCard {
-    width: clamp(9.16rem, 25vw, 28rem);
-    height: clamp(7.20rem, 25vw, 22rem);
-    padding: 1rem 1.15rem;
+    width: clamp(11.34rem, 28vw, 28rem);
+    height: clamp(9.15rem, 22vw, 22rem);
+    display: flex;
+    flex-direction: column;
+    padding-left: clamp(0.66rem, 1.5vw, 1.5rem);
+    padding-right: clamp(0.66rem, 1.5vw, 1.5rem);
     border-radius: 0.5rem;
     background: var(--color-shadow-grey);
     font-family: "Courier New", monospace;
     font-size: clamp(0.75rem, 1.70vw, 1.70rem);
     line-height: 1.9;
+    justify-content: center;
 }
 
 .terminalPath {
