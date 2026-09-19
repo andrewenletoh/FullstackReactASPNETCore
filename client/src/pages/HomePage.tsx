@@ -18,13 +18,24 @@ const HomePage: React.FC = () => {
                         <br />
                         Toh
                     </h1>
-                    <h2 className={styles.introHeader2}>Software Engineer | Working with Machines</h2>
+                    <h2 className={styles.introHeader2}>Working with Machines</h2>
                     <p className={styles.introText}> I throw all my random stuff here.</p>
                 </div>
                 <div
-                    className={styles.introPortrait}
+                    className={styles.terminalCard}
                     aria-hidden="true"
-                />
+                >
+                    <p className={styles.terminalPath}>~/andrew</p>
+                    <p className={styles.terminalLine}>
+                        <span className={styles.terminalPrompt}>$</span> whoami
+                    </p>
+                    <p className={styles.terminalOutput}>&gt; software engineer</p>
+                    <p className={styles.terminalLine}>
+                        <span className={styles.terminalPrompt}>$</span> uptime
+                    </p>
+                    <p className={styles.terminalOutput}>&gt; 5+ yrs shipping code</p>
+                    <p className={styles.terminalCursor}>&#9608;</p>
+                </div>
             </section>
             <section
                 className={styles.projects}

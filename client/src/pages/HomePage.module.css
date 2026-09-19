@@ -16,8 +16,6 @@
 }
 
 .content {
-
-
     display: flex;
     width: 100vw;
     aspect-ratio: 3 / 1;
@@ -26,11 +24,40 @@
     gap: 0.75rem;
 }
 
-.introPortrait {
-    width: clamp(1rem, 25vw, 20rem);
-    background: var(--color-frozen-water);
-    border-radius: 5%;
-    aspect-ratio: 4 / 5;
+.terminalCard {
+    width: clamp(9.16rem, 25vw, 28rem);
+    height: clamp(7.20rem, 25vw, 22rem);
+    padding: 1rem 1.15rem;
+    border-radius: 0.75rem;
+    background: var(--color-shadow-grey);
+    font-family: "Courier New", monospace;
+    font-size: clamp(0.75rem, 1.70vw, 1.70rem);
+    line-height: 1.9;
+}
+
+.terminalPath {
+    margin: 0;
+    color: oklch(0.9903 0.0084 325.64 / 0.5);
+}
+
+.terminalLine {
+    margin: 0;
+    color: var(--color-ghost-white);
+}
+
+.terminalPrompt {
+    color: oklch(0.9903 0.0084 325.64 / 0.5);
+}
+
+.terminalOutput {
+    margin: 0;
+    color: var(--color-tropical-teal);
+}
+
+.terminalCursor {
+    margin: 0;
+    color: var(--color-tropical-teal);
+    opacity: 0.6;
 }
 
 .introHeader1 {
@@ -47,6 +74,7 @@
     color: var(--color-shadow-grey);
     margin: 0;
     line-height: 1.5;
+    text-align: right;
 }
 
 .introText {
@@ -54,6 +82,7 @@
     color: var(--color-shadow-grey);
     margin: 0;
     line-height: 1.5;
+    text-align: right;
 }
 
 .projects {

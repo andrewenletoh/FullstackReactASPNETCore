@@ -67,24 +67,26 @@ function GitRepos({ userName, numOfrepos, showLanguage }: {
     const sortedRepos = sortByMostRecentDate(repoData)
     const sortedAndReducedRepos = arrayToLength(sortedRepos, numOfrepos)
     return (
-        <ul className={styles.repoGrid}>
+        <ul className={styles.repoList}>
             {sortedAndReducedRepos
                 ? sortedAndReducedRepos.map((repo) => (
-                    <li key={repo.id}>
+                    <li key={repo.id} className={styles.repoRow}>
                         <a
-                            className={styles.repoTile}
+                            className={styles.repoLink}
                             href={repo.html_url}
                             target='_blank'
                             rel='noopener noreferrer'
                         >
-                            <span className={styles.repoTitle}>
-                                {removeDash(repo.name)}
-                            </span>
-                            <p className={styles.repoDescription}>
-                                {repo.description || 'No description provided.'}
-                            </p>
-                            <div className={styles.repoFooter}>
-                                {showLanguage ? (
+                            <div className={styles.repoMain}>
+                                <span className={styles.repoTitle}>
+                                    {removeDash(repo.name)}
+                                </span>
+                                <p className={styles.repoDescription}>
+                                    {repo.description || 'No description provided.'}
+                                </p>
+                            </div>
+                            <div className={styles.repoMeta}>
+                                {showLanguage && repo.language ? (
                                     <span className={styles.repoLanguage}>
                                         {repo.language}
                                     </span>

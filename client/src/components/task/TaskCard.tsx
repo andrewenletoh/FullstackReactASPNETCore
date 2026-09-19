@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { AlertTriangle, Check, Edit3, Save, Trash, X } from 'lucide-react';
+import { AlertTriangle, Check, Edit3, GripVertical, Save, Trash, X } from 'lucide-react';
 
 import styles from './TaskCard.module.css';
 import type { BackendTask } from './taskBoard.types';
@@ -58,7 +58,15 @@ function TaskCard({ task, onDragStart, onDelete, onEdit, expandAll, readOnly }: 
             onDoubleClick={() => setExpanded(!isExpanded)}
             aria-labelledby={`task-title-${task.id}`}
         >
-            <h3 className={styles.cardHeader}>{task.title}</h3>
+            <h3 className={styles.cardHeader}>
+                {!readOnly && (
+                    <GripVertical
+                        className={styles.gripIcon}
+                        aria-hidden="true"
+                    />
+                )}
+                <span className={styles.cardTitle}>{task.title}</span>
+            </h3>
             <div
                 className={`${styles.expandedContent}
                 ${isExpanded ? styles.expanded : ''}`}
