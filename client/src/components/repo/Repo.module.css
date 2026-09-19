@@ -1,4 +1,9 @@
 .repoList {
+    --repo-title-color: var(--color-ghost-white);
+    --repo-description-color: oklch(0.9903 0.0084 325.64 / 0.6);
+    --repo-updated-color: oklch(0.9903 0.0084 325.64 / 0.45);
+    --repo-divider-color: oklch(0.9903 0.0084 325.64 / 0.12);
+
     display: flex;
     width: 100%;
     flex-direction: column;
@@ -7,12 +12,19 @@
     list-style: none;
 }
 
+.repoList[data-theme='light'] {
+    --repo-title-color: var(--color-shadow-grey);
+    --repo-description-color: var(--color-blue-slate);
+    --repo-updated-color: var(--color-blue-slate-opa020);
+    --repo-divider-color: var(--color-blue-slate-opa012);
+}
+
 .repoRow {
-    border-top: 1px solid oklch(0.9903 0.0084 325.64 / 0.12);
+    border-top: 1px solid var(--repo-divider-color);
 }
 
 .repoRow:last-child {
-    border-bottom: 1px solid oklch(0.9903 0.0084 325.64 / 0.12);
+    border-bottom: 1px solid var(--repo-divider-color);
 }
 
 .repoLink {
@@ -33,7 +45,7 @@
 
 .repoTitle {
     width: fit-content;
-    color: var(--color-ghost-white);
+    color: var(--repo-title-color);
     font-size: clamp(1.1rem, 1.75vw, 1.4rem);
     font-weight: 700;
     line-height: 1.2;
@@ -47,7 +59,7 @@
 
 .repoDescription {
     margin: 0;
-    color: oklch(0.9903 0.0084 325.64 / 0.6);
+    color: var(--repo-description-color);
     font-size: 0.95rem;
     line-height: 1.5;
 }
@@ -69,7 +81,7 @@
 
 .repoUpdated {
     margin: 0;
-    color: oklch(0.9903 0.0084 325.64 / 0.45);
+    color: var(--repo-updated-color);
     font-size: 0.8rem;
     white-space: nowrap;
 }

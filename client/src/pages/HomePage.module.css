@@ -28,7 +28,7 @@
     width: clamp(9.16rem, 25vw, 28rem);
     height: clamp(7.20rem, 25vw, 22rem);
     padding: 1rem 1.15rem;
-    border-radius: 0.75rem;
+    border-radius: 0.5rem;
     background: var(--color-shadow-grey);
     font-family: "Courier New", monospace;
     font-size: clamp(0.75rem, 1.70vw, 1.70rem);

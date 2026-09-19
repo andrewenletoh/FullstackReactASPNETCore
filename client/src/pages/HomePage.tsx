@@ -53,6 +53,7 @@ const HomePage: React.FC = () => {
                         userName="andrewenletoh"
                         numOfrepos={3}
                         showLanguage={true}
+                        theme="dark"
                     />
                 </div>
             </section>

@@ -55,10 +55,11 @@ export const getRemainingSeconds = (previousDate: number, currentDate: number) =
     return Math.floor((currentDate - previousDate) / 1000)
 }
 
-function GitRepos({ userName, numOfrepos, showLanguage }: {
+function GitRepos({ userName, numOfrepos, showLanguage, theme = 'dark' }: {
     userName: string
     numOfrepos: number
     showLanguage: boolean
+    theme?: 'dark' | 'light'
 }) {
     const [repoData, setRepoData] = useState<Repo[]>([])
     useEffect(() => {
@@ -67,7 +68,7 @@ function GitRepos({ userName, numOfrepos, showLanguage }: {
     const sortedRepos = sortByMostRecentDate(repoData)
     const sortedAndReducedRepos = arrayToLength(sortedRepos, numOfrepos)
     return (
-        <ul className={styles.repoList}>
+        <ul className={styles.repoList} data-theme={theme}>
             {sortedAndReducedRepos
                 ? sortedAndReducedRepos.map((repo) => (
                     <li key={repo.id} className={styles.repoRow}>

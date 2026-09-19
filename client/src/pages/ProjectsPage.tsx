@@ -15,6 +15,7 @@ const ProjectsPage: React.FC = () => {
                         userName="andrewenletoh"
                         numOfrepos={3}
                         showLanguage={true}
+                        theme="light"
                     />
                 </div>
             </section>
