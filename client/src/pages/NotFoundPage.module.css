@@ -1,5 +1,4 @@
 .page {
-    background: var(--color-ghost-white);
     display: flex;
     flex-direction: column;
     justify-content: center;

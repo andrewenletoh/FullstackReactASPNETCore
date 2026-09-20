@@ -1,5 +1,6 @@
 import TaskBoard from "../components/task/TaskBoard";
 import TaskEditorPanel from "../components/task/TaskEditorPanel";
+import DotGridBackground from '../components/background/Background';
 import { useAuth } from "../context/AuthContext";
 import { useTaskBoard } from "../components/task/useTaskBoard";
 import { ChevronsDownUp } from 'lucide-react';
@@ -29,6 +30,7 @@ const TasksPage: React.FC = () => {
 
     return (
         <main className={styles.page}>
+            <DotGridBackground theme="light" />
             <div
                 className={styles.spacer}
                 aria-hidden="true"

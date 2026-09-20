@@ -1,0 +1,64 @@
+.root {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    --mx: 50%;
+    --my: 50%;
+}
+
+.dotGrid {
+    position: absolute;
+    inset: 0;
+    background-image:
+        radial-gradient(var(--color-blue-slate) 1px, transparent 1px),
+        radial-gradient(var(--color-blue-slate) 1px, transparent 1px),
+        radial-gradient(var(--color-blue-slate) 1px, transparent 1px),
+        radial-gradient(var(--color-blue-slate) 1px, transparent 1px);
+    background-position:
+        var(--ox, 0) var(--oy, 0),
+        calc(var(--ox, 0) + 10px) var(--oy, 0),
+        calc(var(--ox, 0) + 15px) calc(var(--oy, 0) + 8.6603px),
+        calc(var(--ox, 0) + 25px) calc(var(--oy, 0) + 8.6603px);
+    background-size:
+        30px 17.3205px,
+        30px 17.3205px,
+        30px 17.3205px,
+        30px 17.3205px;
+    opacity: 0.12;
+}
+
+.root[data-theme='dark'] .dotGrid {
+    background-image: radial-gradient(var(--color-ghost-white) 1px, transparent 1px);
+    opacity: 0.08;
+}
+
+.dotGridSpotlight {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 400ms ease;
+    background-image:
+        radial-gradient(var(--color-tropical-teal) 1px, transparent 1px),
+        radial-gradient(var(--color-tropical-teal) 1px, transparent 1px),
+        radial-gradient(var(--color-tropical-teal) 1px, transparent 1px),
+        radial-gradient(var(--color-tropical-teal) 1px, transparent 1px);
+    background-position:
+        var(--ox, 0) var(--oy, 0),
+        calc(var(--ox, 0) + 10px) var(--oy, 0),
+        calc(var(--ox, 0) + 15px) calc(var(--oy, 0) + 8.6603px),
+        calc(var(--ox, 0) + 25px) calc(var(--oy, 0) + 8.6603px);
+    background-size:
+        30px 17.3205px,
+        30px 17.3205px,
+        30px 17.3205px,
+        30px 17.3205px;
+    -webkit-mask-image: radial-gradient(circle 140px at var(--mx) var(--my), white, transparent 70%);
+    mask-image: radial-gradient(circle 140px at var(--mx) var(--my), white, transparent 70%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .root {
+        display: none;
+    }
+}

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
-import Navbar from './components/NavBar'
+import Navbar from './components/navbar/NavBar'
 import HomePage from './pages/HomePage'
 import TasksPage from './pages/TasksPage'
 import ProjectsPage from './pages/ProjectsPage'
@@ -20,7 +20,7 @@ const App: React.FC = () => {
         <Route path="projects" element={<ProjectsPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
-      <Toaster />
+      <Toaster position="bottom-right" />
     </AuthProvider>
   )
 }

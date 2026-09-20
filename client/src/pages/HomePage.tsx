@@ -1,9 +1,11 @@
 import GitRepos from '../components/repo/Repo';
+import DotGridBackground from '../components/background/Background';
 import styles from './HomePage.module.css';
 
 const HomePage: React.FC = () => {
     return (
-        <main className={styles.page}>
+        <main>
+            <DotGridBackground theme="light" />
             <div
                 className={styles.spacer}
                 aria-hidden="true"
@@ -18,7 +20,7 @@ const HomePage: React.FC = () => {
                         <br />
                         Toh
                     </h1>
-                    <h2 className={styles.introHeader2}>Builds Things. Helps People.</h2>
+                    <h2 className={styles.introHeader2}>Build Things. Help People.</h2>
                     <p className={styles.introText}> I throw all my random stuff here.</p>
                 </div>
                 <div
