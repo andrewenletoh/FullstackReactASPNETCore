@@ -1,5 +1,6 @@
 :root {
     --color-ghost-white: oklch(0.9903 0.0084 325.64);
+    --color-ghost-white-opa060: oklch(0.9903 0.0084 325.64 / 0.6);
     --color-tropical-teal: oklch(0.7261 0.1215 192.76);
     --color-frozen-water: oklch(0.9649 0.0331 194.31);
     --color-frozen-water-opa035: oklch(0.9649 0.0331 194.31 / 0.35);
@@ -11,6 +12,9 @@
     --color-blue-slate-opa016: oklch(0.4577 0.0277 224.2 / 0.16);
     --color-blue-slate-opa020: oklch(0.4577 0.0277 224.2 / 0.2);
     --color-shadow-grey: oklch(0.2964 0.006 314.73);
+    --color-shadow-grey-opa010: oklch(0.2964 0.006 314.73 / 0.1);
+    --color-shadow-grey-opa060: oklch(0.2964 0.006 314.73 / 0.6);
+    --color-shadow-grey-opa080: oklch(0.2964 0.006 314.73 / 0.8);
     --color-vibrant-coral: oklch(0.6931 0.1968 24.77);
     --color-vibrant-coral-opa010: oklch(0.6931 0.1968 24.77 / 0.1);
     --color-vibrant-coral-opa014: oklch(0.6931 0.1968 24.77 / 0.14);

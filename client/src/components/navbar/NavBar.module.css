@@ -12,10 +12,12 @@
     color: var(--color-shadow-grey);
     --navbar-spacing: clamp(12px, 1.25vw, 24px);
     --navlink-font-size: clamp(0.95rem, 1.25vw, 1.15rem);
+    --pill-bg: var(--color-ghost-white-opa060);
 }
 
 .darkBackground {
     color: var(--color-ghost-white);
+    --pill-bg: var(--color-shadow-grey-opa060);
 }
 
 .bar {
@@ -27,8 +29,8 @@
     justify-content: center;
     align-items: center;
     border-radius: 0.5rem;
-    background: oklch(0 0 0 / 0.1);
-    backdrop-filter: blur(5px);
+    background: var(--color-shadow-grey-opa010);
+    backdrop-filter: blur(3px);
 }
 
 .content {
@@ -81,6 +83,7 @@
     padding: 0.5rem 1rem;
     border-radius: 9999px;
     color: inherit;
+    background: var(--pill-bg);
     font-size: var(--navlink-font-size);
     font-weight: 500;
     text-decoration: none;
