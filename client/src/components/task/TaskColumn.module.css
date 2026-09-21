@@ -7,22 +7,22 @@
     flex-shrink: 0;
     overflow: hidden;
     border-radius: 0.625rem;
-    background: var(--color-frozen-water-opa035);
+    background: oklch(from var(--color-frozen-water) l c h / 0.35);
 }
 
 .column[data-status='0'] {
     --column-accent: var(--color-tropical-teal);
-    --column-header-background: var(--color-frozen-water-opa090);
+    --column-header-background: oklch(from var(--color-frozen-water) l c h / 0.9);
 }
 
 .column[data-status='1'] {
     --column-accent: var(--color-blue-slate);
-    --column-header-background: var(--color-blue-slate-opa014);
+    --column-header-background: oklch(from var(--color-blue-slate) l c h / 0.14);
 }
 
 .column[data-status='2'] {
     --column-accent: var(--color-vibrant-coral);
-    --column-header-background: var(--color-vibrant-coral-opa014);
+    --column-header-background: oklch(from var(--color-vibrant-coral) l c h / 0.14);
 }
 
 .column[data-status='3'] {

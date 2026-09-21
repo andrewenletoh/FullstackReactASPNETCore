@@ -48,7 +48,7 @@
     border-radius: 0.5rem;
     color: var(--color-blue-slate);
     background: oklch(0.9903 0.0084 325.64/ 0.78);
-    box-shadow: var(--box-shadow-black);
+    box-shadow: var(--box-shadow-sm);
     cursor: pointer;
     transition: all 200ms ease;
 }

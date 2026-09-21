@@ -15,8 +15,8 @@
 .repoList[data-theme='light'] {
     --repo-title-color: var(--color-shadow-grey);
     --repo-description-color: var(--color-blue-slate);
-    --repo-updated-color: var(--color-blue-slate-opa020);
-    --repo-divider-color: var(--color-blue-slate-opa012);
+    --repo-updated-color: oklch(from var(--color-blue-slate) l c h / 0.2);
+    --repo-divider-color: var(--color-blue-slate-opa12);
 }
 
 .repoRow {

@@ -1,13 +1,14 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
-import Navbar from './components/navbar/NavBar'
-import HomePage from './pages/HomePage'
-import TasksPage from './pages/TasksPage'
-import ProjectsPage from './pages/ProjectsPage'
-import AuthPage from './pages/AuthPage'
-import NotFoundPage from './pages/NotFoundPage'
 import { Toaster } from 'react-hot-toast'
 import { AuthProvider } from './context/AuthContext'
+import Navbar from './components/navbar/NavBar'
+import HomePage from './pages/HomePage'
+import AuthPage from './pages/AuthPage'
+import TasksPage from './pages/TasksPage'
+import ProjectsPage from './pages/ProjectsPage'
+import NotFoundPage from './pages/NotFoundPage'
+
 
 const App: React.FC = () => {
   return (

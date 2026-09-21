@@ -12,12 +12,12 @@
     color: var(--color-shadow-grey);
     --navbar-spacing: clamp(12px, 1.25vw, 24px);
     --navlink-font-size: clamp(0.95rem, 1.25vw, 1.15rem);
-    --pill-bg: var(--color-ghost-white-opa060);
+    --pill-bg: oklch(from var(--color-ghost-white) l c h / 0.6);
 }
 
 .darkBackground {
     color: var(--color-ghost-white);
-    --pill-bg: var(--color-shadow-grey-opa060);
+    --pill-bg: oklch(from var(--color-shadow-grey) l c h / 0.6);
 }
 
 .bar {
@@ -29,7 +29,7 @@
     justify-content: center;
     align-items: center;
     border-radius: 0.5rem;
-    background: var(--color-shadow-grey-opa010);
+    background: oklch(from var(--color-shadow-grey) l c h / 0.1);
     backdrop-filter: blur(3px);
 }
 
@@ -105,7 +105,7 @@
 .active {
     color: var(--color-ghost-white);
     background: var(--color-vibrant-coral);
-    box-shadow: var(--box-shadow-black);
+    box-shadow: var(--box-shadow-sm);
 }
 
 .iconLink {
@@ -202,7 +202,7 @@
     overflow: hidden;
     opacity: 0;
     transition: all 300ms ease-in-out;
-    box-shadow: var(--box-shadow-black);
+    box-shadow: var(--box-shadow-sm);
 }
 
 .menuOpen {
@@ -235,7 +235,7 @@
 
 .mobileNavLink:hover {
     background: var(--color-frozen-water);
-    box-shadow: var(--box-shadow-black);
+    box-shadow: var(--box-shadow-sm);
 }
 
 @media (min-width: 768px) {

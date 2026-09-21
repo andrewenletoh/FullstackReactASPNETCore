@@ -1,40 +1,37 @@
 :root {
+    /* Palette Tokens*/
     --color-ghost-white: oklch(0.9903 0.0084 325.64);
-    --color-ghost-white-opa060: oklch(0.9903 0.0084 325.64 / 0.6);
-    --color-tropical-teal: oklch(0.7261 0.1215 192.76);
     --color-frozen-water: oklch(0.9649 0.0331 194.31);
-    --color-frozen-water-opa035: oklch(0.9649 0.0331 194.31 / 0.35);
-    --color-frozen-water-opa042: oklch(0.9649 0.0331 194.31 / 0.42);
-    --color-frozen-water-opa090: oklch(0.9649 0.0331 194.31 / 0.9);
-    --color-blue-slate: oklch(0.4577 0.0277 224.25);
-    --color-blue-slate-opa012: oklch(0.4577 0.0277 224.2 / 0.12);
-    --color-blue-slate-opa014: oklch(0.4577 0.0277 224.2 / 0.14);
-    --color-blue-slate-opa016: oklch(0.4577 0.0277 224.2 / 0.16);
-    --color-blue-slate-opa020: oklch(0.4577 0.0277 224.2 / 0.2);
-    --color-shadow-grey: oklch(0.2964 0.006 314.73);
-    --color-shadow-grey-opa010: oklch(0.2964 0.006 314.73 / 0.1);
-    --color-shadow-grey-opa060: oklch(0.2964 0.006 314.73 / 0.6);
-    --color-shadow-grey-opa080: oklch(0.2964 0.006 314.73 / 0.8);
+    --color-tropical-teal: oklch(0.7261 0.1215 192.76);
     --color-vibrant-coral: oklch(0.6931 0.1968 24.77);
-    --color-vibrant-coral-opa010: oklch(0.6931 0.1968 24.77 / 0.1);
-    --color-vibrant-coral-opa014: oklch(0.6931 0.1968 24.77 / 0.14);
-    --color-vibrant-coral-opa035: oklch(0.6931 0.1968 24.77 / 0.35);
-    --box-shadow-black: 0 1px 2px oklch(0 0 0 / 0.05);
+    --color-blue-slate: oklch(0.4577 0.0277 224.25);
+    --color-blue-slate-opa12: oklch(0.4577 0.0277 224.25 / 0.12);
+    --color-shadow-grey: oklch(0.2964 0.006 314.73);
+
+    /* Layout Tokens */
+    --box-shadow-sm: 0 1px 2px oklch(0 0 0 / 0.05);
     --nav-bar-ratio: 1 / 20;
-    --icon-button-clamp: clamp(36px, 3vw, 44px);
-    --icon-clamp: clamp(24px, 1.25vw, 4vw);
+
+    /* Responsive Sizing Tokens */
     --header-text-clamp: clamp(2.20rem, 5vw, 5rem);
-    font-family: "Commissioner", sans-serif;
-    color: var(--color-shadow-grey);
+    --icon-button-clamp: clamp(36px, 3vw, 44px);
+    --icon-clamp: clamp(24px, 1.25vw);
+
+    /* Root Defaults */
+    -webkit-text-size-adjust: 100%;
     background: var(--color-ghost-white);
+    color: var(--color-shadow-grey);
+    font-family: "Commissioner", sans-serif;
     font-synthesis: none;
     text-rendering: optimizeLegibility;
 }
 
+/* Standard Sizing Rest */
 * {
     box-sizing: border-box;
 }
 
+/* Mimimum Default Layout Sizes */
 body {
     margin: 0;
     min-width: 320px;
@@ -42,6 +39,8 @@ body {
 }
 
 button,
-input {
+input,
+select,
+textarea {
     font: inherit;
 }

@@ -3,12 +3,12 @@
     flex-wrap: wrap;
     align-items: stretch;
     padding: 0;
-    border: 1px solid var(--color-blue-slate-opa012);
+    border: 1px solid var(--color-blue-slate-opa12);
     border-left: 4px solid var(--column-accent, var(--color-blue-slate));
     border-radius: 0.5rem;
     color: var(--color-shadow-grey);
     background: var(--color-ghost-white);
-    box-shadow: var(--box-shadow-black);
+    box-shadow: var(--box-shadow-sm);
     cursor: move;
     transition: all 200ms ease;
 }
@@ -78,7 +78,7 @@
     align-items: center;
     gap: 0.4rem;
     padding: 0.45rem 0.75rem;
-    border: 1px solid var(--color-blue-slate-opa020);
+    border: 1px solid oklch(from var(--color-blue-slate) l c h / 0.2);
     border-radius: 0.375rem;
     color: var(--color-blue-slate);
     background: transparent;
@@ -122,11 +122,11 @@
     align-items: center;
     gap: 0.35rem;
     padding: 0.35rem 0.5rem;
-    border: 1px solid var(--color-vibrant-coral-opa035);
+    border: 1px solid oklch(from var(--color-vibrant-coral) l c h / 0.35);
     border-radius: 0.375rem;
     color: var(--color-vibrant-coral);
     font-size: 0.8rem;
-    background: var(--color-vibrant-coral-opa010);
+    background: oklch(from var(--color-vibrant-coral) l c h / 0.1);
 }
 
 .warningIcon {
@@ -202,7 +202,7 @@
 .editDescription {
     width: 100%;
     padding: 0.65rem 0.75rem;
-    border: 1px solid var(--color-blue-slate-opa020);
+    border: 1px solid oklch(from var(--color-blue-slate) l c h / 0.2);
     border-radius: 0.375rem;
     color: var(--color-shadow-grey);
     font: inherit;
