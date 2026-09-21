@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 
 import { createTask, deleteTask, getTasks, updateTask, updateTaskStatus } from './taskBoard.api';
@@ -16,6 +16,10 @@ export function useTaskBoard() {
     const [draggedTask, setDraggedTask] = useState<DraggedTask>(null);
     const [isEditorPanelOpen, setEditorPanelOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const [isCreating, setIsCreating] = useState(false);
+    // A ref is checked synchronously, so rapid clicks or Enter presses can't
+    // slip through before the isCreating state has re-rendered.
+    const isCreatingRef = useRef(false);
 
     useEffect(() => {
         let cancelled = false;
@@ -52,10 +56,15 @@ export function useTaskBoard() {
     }, []);
 
     const addNewTask = async () => {
+        if (isCreatingRef.current || isLoading) return;
+
         if (newTask.trim() === '' || newTaskDescription.trim() === '') {
             toast.error('Add a title and description before creating a task.');
             return;
         }
+
+        isCreatingRef.current = true;
+        setIsCreating(true);
 
         try {
             const task = await createTask(
@@ -75,6 +84,11 @@ export function useTaskBoard() {
         } catch (error) {
             toast.error('Unable to create task.');
             console.error('Error creating task:', error);
+        } finally {
+            // Runs after the board update above, so the next add is only
+            // allowed once the new task is visible.
+            isCreatingRef.current = false;
+            setIsCreating(false);
         }
     };
 
@@ -154,6 +168,7 @@ export function useTaskBoard() {
         activeColumn,
         isEditorPanelOpen,
         isLoading,
+        isCreating,
         setNewTask,
         setNewTaskDescription,
         setActiveColumn,

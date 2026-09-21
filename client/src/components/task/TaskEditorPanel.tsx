@@ -10,6 +10,7 @@ type TaskEditorPanelProps = {
     activeColumn: string;
     isOpen: boolean;
     isLoading: boolean;
+    isCreating: boolean;
     onNewTaskChange: (value: string) => void;
     onNewTaskDescriptionChange: (value: string) => void;
     onActiveColumnChange: (value: string) => void;
@@ -24,6 +25,7 @@ function TaskEditorPanel({
     activeColumn,
     isOpen,
     isLoading,
+    isCreating,
     onNewTaskChange,
     onNewTaskDescriptionChange,
     onActiveColumnChange,
@@ -60,6 +62,7 @@ function TaskEditorPanel({
                     onChange={(event) => onNewTaskChange(event.target.value)}
                     placeholder="Add a new task..."
                     onKeyDown={(event) => event.key === 'Enter' && onAddTask()}
+                    readOnly={isCreating}
                     aria-label="New task title"
                 />
                 <textarea
@@ -69,6 +72,7 @@ function TaskEditorPanel({
                     placeholder="Describe the task..."
                     maxLength={32767}
                     required
+                    readOnly={isCreating}
                     aria-label="New task description"
                 />
                 <select
@@ -86,10 +90,11 @@ function TaskEditorPanel({
                 <button
                     className={styles.addButton}
                     onClick={onAddTask}
-                    disabled={isLoading}
+                    disabled={isLoading || isCreating}
+                    aria-busy={isCreating}
                     type="button"
                 >
-                    Add
+                    {isCreating ? 'Adding...' : 'Add'}
                 </button>
             </div>
         </aside>

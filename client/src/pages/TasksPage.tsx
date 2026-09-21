@@ -18,6 +18,7 @@ const TasksPage: React.FC = () => {
         activeColumn,
         isEditorPanelOpen,
         isLoading,
+        isCreating,
         setNewTask,
         setNewTaskDescription,
         setActiveColumn,
@@ -61,6 +62,7 @@ const TasksPage: React.FC = () => {
                             activeColumn={activeColumn}
                             isOpen={isEditorPanelOpen}
                             isLoading={isLoading}
+                            isCreating={isCreating}
                             onNewTaskChange={setNewTask}
                             onNewTaskDescriptionChange={setNewTaskDescription}
                             onActiveColumnChange={setActiveColumn}
