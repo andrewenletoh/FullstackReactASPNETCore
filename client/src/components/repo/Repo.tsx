@@ -14,21 +14,20 @@ type Repo = {
 }
 
 export const fetchApiData = async (username: string) => {
-    const response = await Axios.get(
+    const response = await Axios.get<Repo[]>(
         `https://api.github.com/users/${username}/repos`
     )
     return response.data
 }
 
-export function sortByMostRecentDate(repos: Repo[] | undefined) {
-    if (repos !== undefined)
-        return repos.sort(
-            (a, b) => +new Date(b.updated_at) - +new Date(a.updated_at)
-        )
+export function sortByMostRecentDate(repos: Repo[]) {
+    return [...repos].sort(
+        (a, b) => +new Date(b.updated_at) - +new Date(a.updated_at)
+    )
 }
 
-export function arrayToLength(array: Repo[] | undefined, length: number) {
-    if (array) return array.splice(0, length)
+export function arrayToLength(array: Repo[], length: number) {
+    return array.slice(0, length)
 }
 
 export function removeDash(string: string) {
@@ -63,14 +62,25 @@ function GitRepos({ userName, numOfrepos, showLanguage, theme = 'dark' }: {
 }) {
     const [repoData, setRepoData] = useState<Repo[]>([])
     useEffect(() => {
-        fetchApiData(userName).then(setRepoData)
+        let cancelled = false;
+
+        fetchApiData(userName)
+            .then((repos) => {
+                if (!cancelled) setRepoData(repos);
+            })
+            .catch((error: unknown) => {
+                if (!cancelled) console.error('Error fetching repos:', error);
+            });
+
+        return () => {
+            cancelled = true;
+        };
     }, [userName])
-    const sortedRepos = sortByMostRecentDate(repoData)
-    const sortedAndReducedRepos = arrayToLength(sortedRepos, numOfrepos)
+    const reducedRepos = arrayToLength(sortByMostRecentDate(repoData), numOfrepos)
     return (
         <ul className={styles.repoList} data-theme={theme}>
-            {sortedAndReducedRepos
-                ? sortedAndReducedRepos.map((repo) => (
+            {reducedRepos.length > 0
+                ? reducedRepos.map((repo) => (
                     <li key={repo.id} className={styles.repoRow}>
                         <a
                             className={styles.repoLink}
