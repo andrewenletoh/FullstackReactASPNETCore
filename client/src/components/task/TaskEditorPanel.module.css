@@ -5,25 +5,23 @@
     width: 17rem;
     padding: 1rem;
     border: 0px;
-    border-radius: 0.75rem;
+    border-radius: 0.5rem;
     background: oklch(from var(--color-shadow-grey) l c h / 0.1);
     box-shadow: var(--box-shadow-sm);
     transition: width 300ms cubic-bezier(0.22, 1, 0.36, 1), padding 300ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .taskEditorContainer.panelCollapsed {
-    width: clamp(64px, 5vw, 80px);
-    height: clamp(64px, 5vw, 80px);
-    padding: 0;
+    width: var(--icon-button-container-clamp);
+    height: var(--icon-button-clamp);
     align-items: center;
     justify-content: center;
-    border-radius: 50%;
+    border-radius: 0.5rem;
 }
 
 .taskEditorContainer.panelCollapsed .panelHeader {
     position: relative;
     width: 100%;
-    height: 100%;
     justify-content: center;
 }
 
@@ -31,9 +29,8 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 100%;
-    height: 100%;
-    transform: translate(-50%, -50%);
+    width: var(--icon-button-container-clamp);
+    transform: translate(-50%, -35%);
 }
 
 .panelHeader {
@@ -91,7 +88,7 @@
     padding: 0;
     line-height: 0;
     border: 0;
-    border-radius: 50%;
+    border-radius: 0.5rem;
     color: var(--color-shadow-grey);
     background: transparent;
     cursor: pointer;
