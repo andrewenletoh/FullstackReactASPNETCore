@@ -1,5 +1,6 @@
-import DotGridBackground from '../components/background/Background';
 import styles from './NotFoundPage.module.css';
+import DotGridBackground from '../components/background/Background';
+
 
 const NotFoundPage: React.FC = () => {
     return (

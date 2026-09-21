@@ -1,8 +1,8 @@
 import type { DragEvent } from 'react';
-
 import styles from './TaskColumn.module.css';
 import TaskCard from './TaskCard';
 import type { TaskColumn as TaskColumnData } from './taskBoard.types';
+
 
 type TaskColumnProps = {
     column: TaskColumnData;

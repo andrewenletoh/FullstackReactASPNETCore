@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import styles from './Background.module.css';
 
+
 interface BackgroundProps {
     theme?: 'light' | 'dark';
 }

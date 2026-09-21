@@ -2,6 +2,7 @@ import styles from './TaskBoard.module.css';
 import TaskColumn from './TaskColumn';
 import type { ColumnMap } from './taskBoard.types';
 
+
 type TaskBoardProps = {
     columns: ColumnMap;
     onDrop: (columnId: string) => void;

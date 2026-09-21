@@ -1,7 +1,7 @@
 import { PanelLeftClose, PanelLeftOpen } from 'lucide-react';
-
 import styles from './TaskEditorPanel.module.css';
 import type { ColumnMap } from './taskBoard.types';
+
 
 type TaskEditorPanelProps = {
     columns: ColumnMap;

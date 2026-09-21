@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { AlertTriangle, Check, Edit3, GripVertical, Save, Trash, X } from 'lucide-react';
-
 import styles from './TaskCard.module.css';
 import type { BackendTask } from './taskBoard.types';
+
 
 type TaskCardProps = {
     task: BackendTask;

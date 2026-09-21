@@ -1,6 +1,7 @@
-import GitRepos from '../components/repo/Repo';
-import DotGridBackground from '../components/background/Background';
 import styles from './HomePage.module.css';
+import DotGridBackground from '../components/background/Background';
+import GitRepos from '../components/repo/Repo';
+
 
 const HomePage: React.FC = () => {
     return (

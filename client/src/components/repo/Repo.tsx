@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
-
 import Axios from "axios"
 import styles from './Repo.module.css'
+
 
 type Repo = {
     id: number

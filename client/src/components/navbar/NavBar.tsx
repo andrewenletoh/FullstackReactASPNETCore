@@ -1,8 +1,9 @@
-import { BookMarked, House, Menu, Link, LogIn, LogOut, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import styles from './NavBar.module.css';
 import { NavLink } from 'react-router-dom';
+import { BookMarked, House, Menu, Link, LogIn, LogOut, X } from 'lucide-react';
+import styles from './NavBar.module.css';
 import { useAuth } from '../../context/AuthContext';
+
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);

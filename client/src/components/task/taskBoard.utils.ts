@@ -1,5 +1,6 @@
 import type { BackendTask, ColumnMap } from './taskBoard.types';
 
+
 export const initialColumns: ColumnMap = {
     Todo: { name: 'To Do', status: 0, tasks: [] },
     InProgress: { name: 'In Progress', status: 1, tasks: [] },

@@ -1,6 +1,7 @@
 import styles from './ProjectsPage.module.css';
-import GitRepos from '../components/repo/Repo';
 import DotGridBackground from '../components/background/Background';
+import GitRepos from '../components/repo/Repo';
+
 
 const ProjectsPage: React.FC = () => {
     return (

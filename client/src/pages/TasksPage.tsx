@@ -1,11 +1,12 @@
+import { useState } from 'react';
+import { ChevronsDownUp } from 'lucide-react';
+import styles from './TasksPage.module.css';
+import DotGridBackground from '../components/background/Background';
 import TaskBoard from "../components/task/TaskBoard";
 import TaskEditorPanel from "../components/task/TaskEditorPanel";
-import DotGridBackground from '../components/background/Background';
 import { useAuth } from "../context/AuthContext";
 import { useTaskBoard } from "../components/task/useTaskBoard";
-import { ChevronsDownUp } from 'lucide-react';
-import { useState } from 'react';
-import styles from './TasksPage.module.css';
+
 
 const TasksPage: React.FC = () => {
     const [expandAll, setExpandAll] = useState(false);

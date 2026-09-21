@@ -1,6 +1,6 @@
 import { apiClient } from '../../lib/apiClient';
-
 import type { BackendTask } from './taskBoard.types';
+
 
 export const getTasks = async () => {
     const response = await apiClient.get<BackendTask[]>('/tasks');

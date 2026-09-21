@@ -2,10 +2,10 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
-
-import { useAuth } from '../context/AuthContext';
-import DotGridBackground from '../components/background/Background';
 import styles from './AuthPage.module.css';
+import DotGridBackground from '../components/background/Background';
+import { useAuth } from '../context/AuthContext';
+
 
 type Mode = 'login' | 'register';
 
