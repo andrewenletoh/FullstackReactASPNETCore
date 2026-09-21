@@ -11,10 +11,11 @@ type TaskColumnProps = {
     onDelete: (taskId: string) => void;
     onEdit: (taskId: string, title: string, description: string) => Promise<void>;
     expandAll: boolean;
+    isLoading: boolean;
     readOnly: boolean;
 };
 
-function TaskColumn({ column, onDrop, onDragStart, onDelete, onEdit, expandAll, readOnly }: TaskColumnProps) {
+function TaskColumn({ column, onDrop, onDragStart, onDelete, onEdit, expandAll, isLoading, readOnly }: TaskColumnProps) {
     const handleDragOver = (event: DragEvent<HTMLDivElement>) => {
         event.preventDefault();
     };
@@ -27,6 +28,7 @@ function TaskColumn({ column, onDrop, onDragStart, onDelete, onEdit, expandAll, 
             onDrop={readOnly ? undefined : onDrop}
             role="group"
             aria-label={`${column.name} column`}
+            aria-busy={isLoading}
         >
             <h2 className={styles.columnHeader}>
                 {column.name}
@@ -37,7 +39,12 @@ function TaskColumn({ column, onDrop, onDragStart, onDelete, onEdit, expandAll, 
                 </span>
             </h2>
             <ul className={styles.columnBody}>
-                {column.tasks.length === 0 ? (
+                {isLoading ? (
+                    <li className={styles.loadingColumn} role="status">
+                        <span className={styles.spinner} aria-hidden="true" />
+                        <span className={styles.loadingText}>Loading tasks...</span>
+                    </li>
+                ) : column.tasks.length === 0 ? (
                     <li className={styles.emptyColumn}>Drop Tasks Here</li>
                 ) : (
                     column.tasks.map((task) => (

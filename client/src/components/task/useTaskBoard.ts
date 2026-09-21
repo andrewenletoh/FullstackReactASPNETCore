@@ -5,6 +5,9 @@ import { createTask, deleteTask, getTasks, updateTask, updateTaskStatus } from '
 import { initialColumns, groupTasksByStatus } from './taskBoard.utils';
 import type { ColumnMap, DraggedTask } from './taskBoard.types';
 
+const LOAD_TASKS_TOAST_ID = 'load-tasks';
+const SLOW_LOAD_DELAY_MS = 1000;
+
 export function useTaskBoard() {
     const [columns, setColumns] = useState<ColumnMap>(initialColumns);
     const [newTask, setNewTask] = useState('');
@@ -15,18 +18,37 @@ export function useTaskBoard() {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
+        let cancelled = false;
+
+        // Only show a toast if the request is slow (e.g. a cold-starting backend),
+        // so fast loads don't flash a message. The fixed id lets later toasts replace it.
+        const slowLoadTimer = setTimeout(() => {
+            toast.loading('Loading tasks...', { id: LOAD_TASKS_TOAST_ID });
+        }, SLOW_LOAD_DELAY_MS);
+
         const loadTasks = async () => {
             try {
-                setColumns(groupTasksByStatus(await getTasks()));
+                const tasks = await getTasks();
+                if (cancelled) return;
+                setColumns(groupTasksByStatus(tasks));
+                toast.dismiss(LOAD_TASKS_TOAST_ID);
             } catch (error) {
-                toast.error('Unable to load tasks.');
+                if (cancelled) return;
+                toast.error('Unable to load tasks.', { id: LOAD_TASKS_TOAST_ID });
                 console.error('Error retrieving tasks:', error);
             } finally {
-                setIsLoading(false);
+                clearTimeout(slowLoadTimer);
+                if (!cancelled) setIsLoading(false);
             }
         };
 
         void loadTasks();
+
+        return () => {
+            cancelled = true;
+            clearTimeout(slowLoadTimer);
+            toast.dismiss(LOAD_TASKS_TOAST_ID);
+        };
     }, []);
 
     const addNewTask = async () => {

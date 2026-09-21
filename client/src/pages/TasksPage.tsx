@@ -71,6 +71,7 @@ const TasksPage: React.FC = () => {
                     <TaskBoard
                         columns={columns}
                         expandAll={expandAll}
+                        isLoading={isLoading}
                         onDrop={(columnId) => void dropTask(columnId)}
                         onDragStart={startDragging}
                         onDelete={(columnId, taskId) => void removeTask(columnId, taskId)}
