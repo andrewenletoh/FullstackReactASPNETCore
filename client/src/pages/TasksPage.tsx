@@ -13,15 +13,9 @@ const TasksPage: React.FC = () => {
     const { user } = useAuth();
     const {
         columns,
-        newTask,
-        newTaskDescription,
-        activeColumn,
         isEditorPanelOpen,
         isLoading,
         isCreating,
-        setNewTask,
-        setNewTaskDescription,
-        setActiveColumn,
         setEditorPanelOpen,
         addNewTask,
         removeTask,
@@ -53,17 +47,11 @@ const TasksPage: React.FC = () => {
                 </button>
                 {<TaskEditorPanel
                     columns={columns}
-                    newTask={newTask}
-                    newTaskDescription={newTaskDescription}
-                    activeColumn={activeColumn}
                     isOpen={isEditorPanelOpen}
                     isLoading={isLoading}
                     isCreating={isCreating}
-                    onNewTaskChange={setNewTask}
-                    onNewTaskDescriptionChange={setNewTaskDescription}
-                    onActiveColumnChange={setActiveColumn}
                     onToggle={() => setEditorPanelOpen(!isEditorPanelOpen)}
-                    onAddTask={() => void addNewTask()}
+                    onAddTask={addNewTask}
                 />}
             </aside>
             <section className={styles.content}>

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { PanelLeftClose, PanelLeftOpen } from 'lucide-react';
 import styles from './TaskEditorPanel.module.css';
 import type { ColumnMap } from './taskBoard.types';
@@ -5,33 +6,33 @@ import type { ColumnMap } from './taskBoard.types';
 
 type TaskEditorPanelProps = {
     columns: ColumnMap;
-    newTask: string;
-    newTaskDescription: string;
-    activeColumn: string;
     isOpen: boolean;
     isLoading: boolean;
     isCreating: boolean;
-    onNewTaskChange: (value: string) => void;
-    onNewTaskDescriptionChange: (value: string) => void;
-    onActiveColumnChange: (value: string) => void;
     onToggle: () => void;
-    onAddTask: () => void;
+    onAddTask: (title: string, description: string, columnId: string) => Promise<boolean>;
 };
 
 function TaskEditorPanel({
     columns,
-    newTask,
-    newTaskDescription,
-    activeColumn,
     isOpen,
     isLoading,
     isCreating,
-    onNewTaskChange,
-    onNewTaskDescriptionChange,
-    onActiveColumnChange,
     onToggle,
     onAddTask,
 }: TaskEditorPanelProps) {
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
+    const [columnId, setColumnId] = useState(() => Object.keys(columns)[0] ?? '');
+
+    const submit = async () => {
+        const didCreate = await onAddTask(title, description, columnId);
+        if (didCreate) {
+            setTitle('');
+            setDescription('');
+        }
+    };
+
     return (
         <aside
             className={`${styles.taskEditorContainer} ${isOpen ? '' : styles.panelCollapsed}`}
@@ -58,17 +59,17 @@ function TaskEditorPanel({
                 <input
                     className={styles.inputContainer}
                     type="text"
-                    value={newTask}
-                    onChange={(event) => onNewTaskChange(event.target.value)}
+                    value={title}
+                    onChange={(event) => setTitle(event.target.value)}
                     placeholder="Add a new task..."
-                    onKeyDown={(event) => event.key === 'Enter' && onAddTask()}
+                    onKeyDown={(event) => event.key === 'Enter' && void submit()}
                     readOnly={isCreating}
                     aria-label="New task title"
                 />
                 <textarea
                     className={styles.descriptionContainer}
-                    value={newTaskDescription}
-                    onChange={(event) => onNewTaskDescriptionChange(event.target.value)}
+                    value={description}
+                    onChange={(event) => setDescription(event.target.value)}
                     placeholder="Describe the task..."
                     maxLength={32767}
                     required
@@ -77,19 +78,19 @@ function TaskEditorPanel({
                 />
                 <select
                     className={styles.columnSelect}
-                    value={activeColumn}
-                    onChange={(event) => onActiveColumnChange(event.target.value)}
+                    value={columnId}
+                    onChange={(event) => setColumnId(event.target.value)}
                     aria-label="Column"
                 >
-                    {Object.keys(columns).map((columnId) => (
-                        <option value={columnId} key={columnId}>
-                            {columns[columnId].name}
+                    {Object.keys(columns).map((id) => (
+                        <option value={id} key={id}>
+                            {columns[id].name}
                         </option>
                     ))}
                 </select>
                 <button
                     className={styles.addButton}
-                    onClick={onAddTask}
+                    onClick={() => void submit()}
                     disabled={isLoading || isCreating}
                     aria-busy={isCreating}
                     type="button"

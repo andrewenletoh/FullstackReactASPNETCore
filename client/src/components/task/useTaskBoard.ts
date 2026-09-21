@@ -10,9 +10,6 @@ const SLOW_LOAD_DELAY_MS = 1000;
 
 export function useTaskBoard() {
     const [columns, setColumns] = useState<ColumnMap>(initialColumns);
-    const [newTask, setNewTask] = useState('');
-    const [newTaskDescription, setNewTaskDescription] = useState('');
-    const [activeColumn, setActiveColumn] = useState('Todo');
     const [draggedTask, setDraggedTask] = useState<DraggedTask>(null);
     const [isEditorPanelOpen, setEditorPanelOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
@@ -56,38 +53,37 @@ export function useTaskBoard() {
         };
     }, []);
 
-    const addNewTask = async () => {
-        if (isCreatingRef.current || isLoading) return;
+    const addNewTask = async (title: string, description: string, columnId: string): Promise<boolean> => {
+        if (isCreatingRef.current || isLoading) return false;
 
-        if (newTask.trim() === '' || newTaskDescription.trim() === '') {
+        const trimmedTitle = title.trim();
+        const trimmedDescription = description.trim();
+        if (trimmedTitle === '' || trimmedDescription === '') {
             toast.error('Add a title and description before creating a task.');
-            return;
+            return false;
         }
 
         isCreatingRef.current = true;
         setIsCreating(true);
 
+        let created = false;
         try {
-            const task = await createTask(
-                newTask.trim(),
-                newTaskDescription.trim(),
-                initialColumns[activeColumn].status
-            );
+            const task = await createTask(trimmedTitle, trimmedDescription, initialColumns[columnId].status);
             setColumns((currentColumns) => ({
                 ...currentColumns,
-                [activeColumn]: {
-                    ...currentColumns[activeColumn],
-                    tasks: [...currentColumns[activeColumn].tasks, task],
+                [columnId]: {
+                    ...currentColumns[columnId],
+                    tasks: [...currentColumns[columnId].tasks, task],
                 },
             }));
-            setNewTask('');
-            setNewTaskDescription('');
+            created = true;
         } catch (error) {
             toast.error('Unable to create task.');
             console.error('Error creating task:', error);
         }
         isCreatingRef.current = false;
         setIsCreating(false);
+        return created;
     };
 
     const removeTask = async (columnId: string, taskId: string) => {
@@ -160,15 +156,9 @@ export function useTaskBoard() {
 
     return {
         columns,
-        newTask,
-        newTaskDescription,
-        activeColumn,
         isEditorPanelOpen,
         isLoading,
         isCreating,
-        setNewTask,
-        setNewTaskDescription,
-        setActiveColumn,
         setEditorPanelOpen,
         addNewTask,
         removeTask,
