@@ -33,17 +33,18 @@ export function useTaskBoard() {
         const loadTasks = async () => {
             try {
                 const tasks = await getTasks();
-                if (cancelled) return;
-                setColumns(groupTasksByStatus(tasks));
-                toast.dismiss(LOAD_TASKS_TOAST_ID);
+                if (!cancelled) {
+                    setColumns(groupTasksByStatus(tasks));
+                    toast.dismiss(LOAD_TASKS_TOAST_ID);
+                }
             } catch (error) {
-                if (cancelled) return;
-                toast.error('Unable to load tasks.', { id: LOAD_TASKS_TOAST_ID });
-                console.error('Error retrieving tasks:', error);
-            } finally {
-                clearTimeout(slowLoadTimer);
-                if (!cancelled) setIsLoading(false);
+                if (!cancelled) {
+                    toast.error('Unable to load tasks.', { id: LOAD_TASKS_TOAST_ID });
+                    console.error('Error retrieving tasks:', error);
+                }
             }
+            clearTimeout(slowLoadTimer);
+            if (!cancelled) setIsLoading(false);
         };
 
         void loadTasks();
@@ -84,12 +85,9 @@ export function useTaskBoard() {
         } catch (error) {
             toast.error('Unable to create task.');
             console.error('Error creating task:', error);
-        } finally {
-            // Runs after the board update above, so the next add is only
-            // allowed once the new task is visible.
-            isCreatingRef.current = false;
-            setIsCreating(false);
         }
+        isCreatingRef.current = false;
+        setIsCreating(false);
     };
 
     const removeTask = async (columnId: string, taskId: string) => {
@@ -156,9 +154,8 @@ export function useTaskBoard() {
         } catch (error) {
             toast.error('Unable to move task.');
             console.error('Error moving task:', error);
-        } finally {
-            setDraggedTask(null);
         }
+        setDraggedTask(null);
     };
 
     return {

@@ -45,9 +45,11 @@ function TaskCard({ task, onDragStart, onDelete, onEdit, expandAll, readOnly }: 
         try {
             await onEdit(editTitle.trim(), editDescription.trim());
             setEditing(false);
-        } finally {
+        } catch (error) {
             setSaving(false);
+            throw error;
         }
+        setSaving(false);
     };
 
     return (

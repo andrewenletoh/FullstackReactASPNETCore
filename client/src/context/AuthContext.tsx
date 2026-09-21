@@ -58,9 +58,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const logout = useCallback(async () => {
         try {
             await logoutUser();
-        } finally {
+        } catch (error) {
             setUser(null);
+            throw error;
         }
+        setUser(null);
     }, []);
 
     // useMemo poops out all these values as one object, so components consuming AuthContext don't
