@@ -35,7 +35,7 @@
     padding: 2rem;
     border: 1px solid var(--color-blue-slate-opa12);
     border-radius: 0.75rem;
-    background: var(oklch(from var(--color-frozen-water) l c h / 0.42));
+    background: oklch(from var(--color-frozen-water) l c h / 0.42);
     box-shadow: var(--box-shadow-sm);
 }
 
