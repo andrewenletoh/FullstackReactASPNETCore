@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ChevronsDownUp } from 'lucide-react';
+import { ChevronsDownUp, ChevronsUpDown } from 'lucide-react';
 import styles from './TasksPage.module.css';
 import DotGridBackground from '../components/background/Background';
 import TaskBoard from "../components/task/TaskBoard";
@@ -52,10 +52,13 @@ const TasksPage: React.FC = () => {
                             aria-label={expandAll ? 'Collapse all task cards' : 'Expand all task cards'}
                             title={expandAll ? 'Collapse all task cards' : 'Expand all task cards'}
                         >
-                            <ChevronsDownUp aria-hidden="true" />
+                            {expandAll ?
+                                <ChevronsDownUp aria-hidden="true" /> :
+                                <ChevronsUpDown aria-hidden="true" />
+                            }
                             <span>{expandAll ? 'Collapse all' : 'Expand all'}</span>
                         </button>
-                        {user ? <TaskEditorPanel
+                        {<TaskEditorPanel
                             columns={columns}
                             newTask={newTask}
                             newTaskDescription={newTaskDescription}
@@ -68,7 +71,7 @@ const TasksPage: React.FC = () => {
                             onActiveColumnChange={setActiveColumn}
                             onToggle={() => setEditorPanelOpen(!isEditorPanelOpen)}
                             onAddTask={() => void addNewTask()}
-                        /> : null}
+                        />}
                     </aside>
                     <TaskBoard
                         columns={columns}

@@ -44,20 +44,23 @@
     gap: 0.5rem;
     margin-bottom: 0.75rem;
     padding: 0.65rem 1rem;
-    border: 1px solid oklch(0.4577 0.0277 224.25 / 0.16);
+    border: 0px;
     border-radius: 0.5rem;
     color: var(--color-blue-slate);
-    background: oklch(0.9903 0.0084 325.64/ 0.78);
+    background: oklch(from var(--color-shadow-grey) l c h / 0.1);
     box-shadow: var(--box-shadow-sm);
     cursor: pointer;
     transition: all 200ms ease;
 }
 
-.expandAllButton:hover,
-.expandAllButton[aria-pressed='true'] {
-    border-color: var(--color-tropical-teal);
+.expandAllButton:hover {
     color: var(--color-tropical-teal);
     background: var(--color-frozen-water);
+}
+
+.expandAllButton[aria-pressed='true'] {
+    color: var(--color-ghost-white);
+    background: var(--color-vibrant-coral);
 }
 
 .expandAllButton:focus-visible {

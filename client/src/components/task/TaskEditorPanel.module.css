@@ -4,9 +4,9 @@
     gap: 1rem;
     width: 17rem;
     padding: 1rem;
-    border: 1px solid var(--color-blue-slate-opa12);
+    border: 0px;
     border-radius: 0.75rem;
-    background: oklch(from var(--color-frozen-water) l c h / 0.42);
+    background: oklch(from var(--color-shadow-grey) l c h / 0.1);
     box-shadow: var(--box-shadow-sm);
     transition: width 300ms cubic-bezier(0.22, 1, 0.36, 1), padding 300ms cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -100,6 +100,7 @@
 
 .panelToggle:hover {
     color: var(--color-tropical-teal);
+    background: var(--color-frozen-water);
 }
 
 .panelToggle:focus-visible,
