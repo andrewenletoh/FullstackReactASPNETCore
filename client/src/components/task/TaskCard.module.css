@@ -240,7 +240,7 @@
 
 .cancelEditButton {
     color: var(--color-blue-slate);
-    background: var(--color-blue-slate-opa010);
+    background: oklch(from var(--color-blue-slate) l c h / 0.1)
 }
 
 .saveButton:hover,
