@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { AlertTriangle, Check, Edit3, GripVertical, Save, Trash, X } from 'lucide-react';
 import styles from './TaskCard.module.css';
 import type { BackendTask } from './taskBoard.types';
@@ -16,14 +16,15 @@ type TaskCardProps = {
 function TaskCard({ task, onDragStart, onDelete, onEdit, expandAll, readOnly }: TaskCardProps) {
     const [isDeleteWarningVisible, setDeleteWarningVisible] = useState(false);
     const [isExpanded, setExpanded] = useState(false);
+    const [syncedExpandAll, setSyncedExpandAll] = useState(expandAll);
+    if (expandAll !== syncedExpandAll) {
+        setSyncedExpandAll(expandAll);
+        setExpanded(expandAll);
+    }
     const [isEditing, setEditing] = useState(false);
     const [editTitle, setEditTitle] = useState(task.title);
     const [editDescription, setEditDescription] = useState(task.description);
     const [isSaving, setSaving] = useState(false);
-
-    useEffect(() => {
-        setExpanded(expandAll);
-    }, [expandAll]);
 
     const startEditing = () => {
         setEditTitle(task.title);
