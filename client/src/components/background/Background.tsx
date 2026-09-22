@@ -27,6 +27,8 @@ function Background({ theme = 'light' }: BackgroundProps) {
 
         const baseVX = 0.07;
         const baseVY = 0.07;
+        const tileW = 30;
+        const tileH = 17.3205;
         let targetVX = baseVX;
         let targetVY = baseVY;
         let curVX = baseVX;
@@ -68,8 +70,8 @@ function Background({ theme = 'light' }: BackgroundProps) {
             targetVY += (baseVY - targetVY) * 0.01;
             curVX += (targetVX - curVX) * 0.04;
             curVY += (targetVY - curVY) * 0.04;
-            offX += curVX;
-            offY += curVY;
+            offX = (((offX + curVX) % tileW) + tileW) % tileW;
+            offY = (((offY + curVY) % tileH) + tileH) % tileH;
             root.style.setProperty('--ox', `${offX}px`);
             root.style.setProperty('--oy', `${offY}px`);
             frameId = requestAnimationFrame(frame);
