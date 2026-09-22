@@ -3,7 +3,6 @@ import { useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import styles from './AuthPage.module.css';
-import DotGridBackground from '../components/background/Background';
 import { useAuth } from '../context/AuthContext';
 
 
@@ -56,7 +55,6 @@ const AuthPage = () => {
 
     return (
         <div className={styles.page}>
-            <DotGridBackground theme="light" />
             <div className={styles.content}>
                 <div className={styles.card}>
                     <h1 className={styles.title}>{mode === 'login' ? 'Welcome back' : 'Create an account'}</h1>

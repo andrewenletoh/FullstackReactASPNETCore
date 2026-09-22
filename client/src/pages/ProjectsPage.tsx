@@ -1,12 +1,10 @@
 import styles from './ProjectsPage.module.css';
-import DotGridBackground from '../components/background/Background';
 import GitRepos from '../components/repo/Repo';
 
 
 const ProjectsPage: React.FC = () => {
     return (
         <main className={styles.page}>
-            <DotGridBackground theme="light" />
             <div
                 className={styles.spacer}
                 aria-hidden="true"

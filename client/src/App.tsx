@@ -2,6 +2,7 @@ import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
 import { AuthProvider } from './context/AuthContext'
+import DotGridBackground from './components/background/Background'
 import Navbar from './components/navbar/NavBar'
 import HomePage from './pages/HomePage'
 import AuthPage from './pages/AuthPage'
@@ -13,6 +14,7 @@ import NotFoundPage from './pages/NotFoundPage'
 const App: React.FC = () => {
   return (
     <AuthProvider>
+      <DotGridBackground theme="light" />
       <Navbar />
       <Routes>
         <Route index element={<HomePage />} />
