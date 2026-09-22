@@ -17,6 +17,12 @@ export function useTaskBoard() {
     // A ref is checked synchronously, so rapid clicks or Enter presses can't
     // slip through before the isCreating state has re-rendered.
     const isCreatingRef = useRef(false);
+    const deletingTaskIdsRef = useRef<Set<string>>(new Set());
+    const [deletingTaskIds, setDeletingTaskIds] = useState<Set<string>>(new Set());
+    const editingTaskIdsRef = useRef<Set<string>>(new Set());
+    const isDroppingRef = useRef(false);
+
+
 
     useEffect(() => {
         let cancelled = false;
@@ -87,6 +93,11 @@ export function useTaskBoard() {
     };
 
     const removeTask = async (columnId: string, taskId: string) => {
+        if (deletingTaskIdsRef.current.has(taskId)) return;
+
+        deletingTaskIdsRef.current.add(taskId);
+        setDeletingTaskIds((current) => new Set(current).add(taskId));
+
         try {
             await deleteTask(taskId);
             setColumns((currentColumns) => ({
@@ -100,12 +111,22 @@ export function useTaskBoard() {
             toast.error('Unable to delete task.');
             console.error('Error deleting task:', error);
         }
+
+        deletingTaskIdsRef.current.delete(taskId);
+        setDeletingTaskIds((current) => {
+            const next = new Set(current);
+            next.delete(taskId);
+            return next;
+        });
     };
 
     const editTask = async (columnId: string, taskId: string, title: string, description: string) => {
+        if (editingTaskIdsRef.current.has(taskId)) return;
+
         const currentTask = columns[columnId].tasks.find((task) => task.id === taskId);
         if (!currentTask) return;
 
+        editingTaskIdsRef.current.add(taskId);
         const updatedTask = { ...currentTask, title, description };
         try {
             await updateTask(updatedTask);
@@ -119,8 +140,10 @@ export function useTaskBoard() {
         } catch (error) {
             toast.error('Unable to edit task.');
             console.error('Error editing task:', error);
+            editingTaskIdsRef.current.delete(taskId);
             throw error;
         }
+        editingTaskIdsRef.current.delete(taskId);
     };
 
     const startDragging = (columnId: string, taskId: string) => {
@@ -129,9 +152,12 @@ export function useTaskBoard() {
     };
 
     const dropTask = async (columnId: string) => {
+        if (isDroppingRef.current) return;
+
         const draggedTask = draggedTaskRef.current;
         if (!draggedTask || draggedTask.columnId === columnId) return;
 
+        isDroppingRef.current = true;
         const { columnId: sourceColumnId, task } = draggedTask;
 
         try {
@@ -153,6 +179,7 @@ export function useTaskBoard() {
             console.error('Error moving task:', error);
         }
         draggedTaskRef.current = null;
+        isDroppingRef.current = false;
     };
 
     return {
