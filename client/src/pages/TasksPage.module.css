@@ -25,7 +25,7 @@
 
 .editorRail {
     position: fixed;
-    top: clamp(64px 5vw 128px);
+    top: clamp(64px, 5vw, 128px);
     z-index: 2;
     left: 1.5vw;
     width: 17rem;
@@ -35,12 +35,10 @@
 .expandAllButton {
     display: flex;
     width: var(--icon-button-container-clamp);
-    min-height: 2.75rem;
+    height: var(--icon-button-clamp);
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
-    margin-bottom: 0.75rem;
-    padding: 0.65rem 1rem;
+    margin-bottom: 1rem;
     border: 0px;
     border-radius: 0.5rem;
     color: var(--color-blue-slate);
@@ -65,16 +63,16 @@
     outline-offset: 2px;
 }
 
-.panelCollapsed .editorRail {
-    width: 5rem;
+.editorRail.panelCollapsed {
+    top: clamp(64px 5vw 128px);
 }
 
-.panelCollapsed .expandAllButton {
-    width: 5rem;
+.editorRail.panelCollapsed .expandAllButton {
+    top: clamp(64px 5vw 128px);
     padding: 0.65rem;
 }
 
-.panelCollapsed .expandAllButton span {
+.editorRail.panelCollapsed .expandAllButton span {
     display: none;
 }
 
@@ -109,7 +107,7 @@
     }
 
     .expandAllButton,
-    .panelCollapsed .expandAllButton {
+    .editorRail.panelCollapsed .expandAllButton {
         width: 100%;
     }
 

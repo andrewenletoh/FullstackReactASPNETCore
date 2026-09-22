@@ -31,7 +31,7 @@ const TasksPage: React.FC = () => {
                 className={styles.spacer}
                 aria-hidden="true"
             />
-            <aside className={styles.editorRail}>
+            <aside className={`${styles.editorRail} ${isEditorPanelOpen ? '' : styles.panelCollapsed}`}>
                 <button
                     className={styles.expandAllButton}
                     type="button"
@@ -45,19 +45,18 @@ const TasksPage: React.FC = () => {
                         <ChevronsUpDown className={styles.icon} aria-hidden="true" />
                     }
                 </button>
-                {<TaskEditorPanel
+                {user ? <TaskEditorPanel
                     columns={columns}
                     isOpen={isEditorPanelOpen}
                     isLoading={isLoading}
                     isCreating={isCreating}
                     onToggle={() => setEditorPanelOpen(!isEditorPanelOpen)}
                     onAddTask={addNewTask}
-                />}
+                /> : null}
             </aside>
             <section className={styles.content}>
                 <div
-                    className={`${styles.taskLayout}
-                    ${isEditorPanelOpen ? '' : styles.panelCollapsed}`}
+                    className={styles.taskLayout}
                 >
                     <h1 className={styles.header}>Tasks</h1>
                     <TaskBoard
