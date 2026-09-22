@@ -10,7 +10,7 @@ const SLOW_LOAD_DELAY_MS = 1000;
 
 export function useTaskBoard() {
     const [columns, setColumns] = useState<ColumnMap>(initialColumns);
-    const [draggedTask, setDraggedTask] = useState<DraggedTask>(null);
+    const draggedTaskRef = useRef<DraggedTask>(null);
     const [isEditorPanelOpen, setEditorPanelOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [isCreating, setIsCreating] = useState(false);
@@ -125,10 +125,11 @@ export function useTaskBoard() {
 
     const startDragging = (columnId: string, taskId: string) => {
         const task = columns[columnId].tasks.find((item) => item.id === taskId);
-        if (task) setDraggedTask({ columnId, task });
+        if (task) draggedTaskRef.current = { columnId, task };
     };
 
     const dropTask = async (columnId: string) => {
+        const draggedTask = draggedTaskRef.current;
         if (!draggedTask || draggedTask.columnId === columnId) return;
 
         const { columnId: sourceColumnId, task } = draggedTask;
@@ -151,7 +152,7 @@ export function useTaskBoard() {
             toast.error('Unable to move task.');
             console.error('Error moving task:', error);
         }
-        setDraggedTask(null);
+        draggedTaskRef.current = null;
     };
 
     return {
