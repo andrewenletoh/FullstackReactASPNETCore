@@ -13,7 +13,8 @@
 
 .taskEditorContainer.panelCollapsed {
     width: var(--icon-button-container-clamp);
-    height: var(--icon-button-container-clamp);
+    height: var(--icon-button-clamp);
+    padding: 0rem;
     align-items: center;
     justify-content: center;
     border-radius: 0.5rem;
@@ -31,8 +32,6 @@
     left: 50%;
     width: var(--icon-button-container-clamp);
     height: var(--icon-button-clamp);
-    min-height: 2.75rem;
-    padding: 0.65rem 1rem;
     transform: translate(-50%, -35%);
 }
 
