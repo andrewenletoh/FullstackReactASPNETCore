@@ -29,7 +29,9 @@
 }
 
 /* Standard Sizing Rest */
-* {
+*,
+*::before,
+*::after {
     box-sizing: border-box;
 }
 
