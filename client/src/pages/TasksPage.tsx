@@ -48,14 +48,14 @@ const TasksPage: React.FC = () => {
 
                     </button>
                 </div>
-                <TaskEditorPanel
+                {user ? <TaskEditorPanel
                     columns={columns}
                     isOpen={isEditorPanelOpen}
                     isLoading={isLoading}
                     isCreating={isCreating}
                     onToggle={() => setEditorPanelOpen(!isEditorPanelOpen)}
                     onAddTask={addNewTask}
-                />
+                /> : null}
             </aside>
             <section className={styles.content}>
                 <div
