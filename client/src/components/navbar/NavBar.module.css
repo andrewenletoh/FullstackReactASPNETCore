@@ -6,8 +6,9 @@
     display: flex;
     box-sizing: border-box;
     width: 100%;
-    min-height: 64px;
-    aspect-ratio: 20 / 1;
+    height: clamp(64px, 5vw, 128px);
+    /* min-height: 64px;
+    aspect-ratio: 20 / 1; */
     align-items: center;
     justify-content: center;
     color: var(--color-shadow-grey);
@@ -25,9 +26,10 @@
     display: flex;
     box-sizing: border-box;
     width: 97%;
+    height: clamp(56px, 3.85vw, 95.5px);
     margin: 0 auto;
-    aspect-ratio: 26 / 1;
-    min-height: 56px;
+    /* aspect-ratio: 26 / 1;
+    min-height: 56px; */
     justify-content: center;
     align-items: center;
     border-radius: 0.5rem;
