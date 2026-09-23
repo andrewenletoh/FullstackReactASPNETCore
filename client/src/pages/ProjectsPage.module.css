@@ -30,5 +30,5 @@
 }
 
 .reposContainer {
-    width: 50%;
+    width: clamp(300px, 80%, 1195px);
 }
