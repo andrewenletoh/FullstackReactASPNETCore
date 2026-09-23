@@ -12,10 +12,11 @@ type TaskColumnProps = {
     onEdit: (taskId: string, title: string, description: string) => Promise<void>;
     expandAll: boolean;
     isLoading: boolean;
+    deletingTaskIds: Set<string>;
     readOnly: boolean;
 };
 
-function TaskColumn({ column, onDrop, onDragStart, onDelete, onEdit, expandAll, isLoading, readOnly }: TaskColumnProps) {
+function TaskColumn({ column, onDrop, onDragStart, onDelete, onEdit, expandAll, isLoading, deletingTaskIds, readOnly }: TaskColumnProps) {
     const handleDragOver = (event: DragEvent<HTMLDivElement>) => {
         event.preventDefault();
     };
@@ -56,6 +57,7 @@ function TaskColumn({ column, onDrop, onDragStart, onDelete, onEdit, expandAll, 
                                 onDelete={() => onDelete(task.id)}
                                 onEdit={(title, description) => onEdit(task.id, title, description)}
                                 expandAll={expandAll}
+                                isDeleting={deletingTaskIds.has(task.id)}
                                 readOnly={readOnly}
                             />
                         </li>

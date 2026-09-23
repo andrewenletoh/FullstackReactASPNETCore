@@ -15,6 +15,7 @@ const TasksPage: React.FC = () => {
         isEditorPanelOpen,
         isLoading,
         isCreating,
+        deletingTaskIds,
         setEditorPanelOpen,
         addNewTask,
         removeTask,
@@ -61,6 +62,7 @@ const TasksPage: React.FC = () => {
                         columns={columns}
                         expandAll={expandAll}
                         isLoading={isLoading}
+                        deletingTaskIds={deletingTaskIds}
                         onDrop={(columnId) => void dropTask(columnId)}
                         onDragStart={startDragging}
                         onDelete={(columnId, taskId) => void removeTask(columnId, taskId)}

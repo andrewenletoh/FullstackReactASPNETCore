@@ -11,10 +11,11 @@ type TaskBoardProps = {
     onEdit: (columnId: string, taskId: string, title: string, description: string) => Promise<void>;
     expandAll: boolean;
     isLoading: boolean;
+    deletingTaskIds: Set<string>;
     readOnly: boolean;
 };
 
-function TaskBoard({ columns, onDrop, onDragStart, onDelete, onEdit, expandAll, isLoading, readOnly }: TaskBoardProps) {
+function TaskBoard({ columns, onDrop, onDragStart, onDelete, onEdit, expandAll, isLoading, deletingTaskIds, readOnly }: TaskBoardProps) {
     return (
         <div className={styles.taskDashboard}>
             <div className={styles.taskBoardInteractContainer}>
@@ -29,6 +30,7 @@ function TaskBoard({ columns, onDrop, onDragStart, onDelete, onEdit, expandAll, 
                             onEdit={(taskId, title, description) => onEdit(columnId, taskId, title, description)}
                             expandAll={expandAll}
                             isLoading={isLoading}
+                            deletingTaskIds={deletingTaskIds}
                             readOnly={readOnly}
                         />
                     ))}

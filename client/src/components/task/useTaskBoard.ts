@@ -187,6 +187,7 @@ export function useTaskBoard() {
         isEditorPanelOpen,
         isLoading,
         isCreating,
+        deletingTaskIds,
         setEditorPanelOpen,
         addNewTask,
         removeTask,

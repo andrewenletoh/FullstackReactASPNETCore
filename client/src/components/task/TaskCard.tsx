@@ -10,10 +10,11 @@ type TaskCardProps = {
     onDelete: () => void;
     onEdit: (title: string, description: string) => Promise<void>;
     expandAll: boolean;
+    isDeleting: boolean;
     readOnly: boolean;
 };
 
-function TaskCard({ task, onDragStart, onDelete, onEdit, expandAll, readOnly }: TaskCardProps) {
+function TaskCard({ task, onDragStart, onDelete, onEdit, expandAll, isDeleting, readOnly }: TaskCardProps) {
     const [isDeleteWarningVisible, setDeleteWarningVisible] = useState(false);
     const [isExpanded, setExpanded] = useState(false);
     const [syncedExpandAll, setSyncedExpandAll] = useState(expandAll);
@@ -140,11 +141,13 @@ function TaskCard({ task, onDragStart, onDelete, onEdit, expandAll, readOnly }: 
                                             className={styles.warningIcon}
                                             aria-hidden="true"
                                         />
-                                        <span>Delete this task?</span>
+                                        <span>{isDeleting ? 'Deleting...' : 'Delete this task?'}</span>
                                         <button
                                             className={styles.confirmDeleteButton}
                                             onClick={onDelete}
                                             type="button"
+                                            disabled={isDeleting}
+                                            aria-busy={isDeleting}
                                             aria-label="Confirm delete task"
                                             title="Delete task"
                                         >
@@ -153,7 +156,9 @@ function TaskCard({ task, onDragStart, onDelete, onEdit, expandAll, readOnly }: 
                                         <button
                                             className={styles.cancelDeleteButton}
                                             onClick={() => setDeleteWarningVisible(false)}
-                                            type="button" aria-label="Cancel delete task"
+                                            type="button"
+                                            disabled={isDeleting}
+                                            aria-label="Cancel delete task"
                                             title="Cancel"
                                         >
                                             <X aria-hidden="true" />
