@@ -43,10 +43,14 @@ const HomePage: React.FC = () => {
                 data-navbar-theme="dark"
                 aria-labelledby="recent-projects-heading"
             >
-                <div className={styles.projectsContent}>
+                <div
+                    className={styles.projectsContent}
+                    data-navbar-theme="dark"
+                >
                     <h2
                         id="recent-projects-heading"
                         className={styles.projectsHeader1}
+                        data-navbar-theme="dark"
                     >
                         Recent Projects
                     </h2>
@@ -55,6 +59,7 @@ const HomePage: React.FC = () => {
                         numOfrepos={3}
                         showLanguage={true}
                         theme="dark"
+                        data-navbar-theme="dark"
                     />
                 </div>
             </section>

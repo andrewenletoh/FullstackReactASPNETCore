@@ -199,6 +199,7 @@ const Navbar = () => {
                         to="/tasks"
                         className={({ isActive }) => `${styles.mobileNavLink} ${isActive ? styles.active : ''}`}
                         tabIndex={isMenuOpen ? undefined : -1}
+                        onClick={() => setIsMenuOpen(!isMenuOpen)}
                     >
                         tasks
                     </NavLink>
@@ -207,6 +208,7 @@ const Navbar = () => {
                         to="/projects"
                         className={({ isActive }) => `${styles.mobileNavLink} ${isActive ? styles.active : ''}`}
                         tabIndex={isMenuOpen ? undefined : -1}
+                        onClick={() => setIsMenuOpen(!isMenuOpen)}
                     >
                         projects
                     </NavLink>
@@ -215,6 +217,7 @@ const Navbar = () => {
                         to="/agent"
                         className={({ isActive }) => `${styles.mobileNavLink} ${isActive ? styles.active : ''}`}
                         tabIndex={isMenuOpen ? undefined : -1}
+                        onClick={() => setIsMenuOpen(!isMenuOpen)}
                     >
                         agent
                     </NavLink>
