@@ -26,24 +26,38 @@
 .editorRail {
     position: fixed;
     top: clamp(64px, 5vw, 128px);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(4px, 0.635vw, 16.25px);
     z-index: 2;
     left: 1.5vw;
     width: 17rem;
     transition: width 300ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.expandAllButton {
+.buttonContainer {
     display: flex;
-    width: var(--icon-button-container-clamp);
-    height: var(--icon-button-clamp);
     align-items: center;
     justify-content: center;
-    margin-bottom: 1rem;
-    border: 0px;
+    width: var(--icon-button-container-width-clamp);
+    height: var(--icon-button-container-height-clamp);
+    padding: 0 clamp(12px, 1.25vw, 24px);
     border-radius: 0.5rem;
-    color: var(--color-shadow-grey);
-    background: oklch(from var(--color-shadow-grey) l c h / 0.1);
+    background-color: oklch(from var(--color-shadow-grey) l c h / 0.1);
     box-shadow: var(--box-shadow-sm);
+    backdrop-filter: blur(3px);
+}
+
+.expandAllButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--icon-button-clamp);
+    height: var(--icon-button-clamp);
+    border: 0px;
+    border-radius: 0.375rem;
+    color: var(--color-shadow-grey);
+    background: oklch(from var(--color-ghost-white) l c h / 0.6);
     cursor: pointer;
     transition: all 200ms ease;
 }
@@ -69,7 +83,6 @@
 
 .editorRail.panelCollapsed .expandAllButton {
     top: clamp(64px 5vw 128px);
-    padding: 0.65rem;
 }
 
 .editorRail.panelCollapsed .expandAllButton span {
@@ -101,24 +114,25 @@
     }
 
     .editorRail {
-        position: static;
-        width: 100%;
-        order: 2;
+        position: fixed;
+        width: 97%;
+        align-self: flex-start;
+        order: 1;
     }
 
     .expandAllButton,
-    .editorRail.panelCollapsed .expandAllButton {
-        width: 100%;
+    .panelCollapsed .expandAllButton {
+        width: var(--icon-button-clamp);
     }
 
     .panelCollapsed .editorRail {
-        width: 100%;
+        width: auto;
     }
 
     .header {
         width: auto;
         align-self: flex-end;
         margin: 1rem 0;
-        order: 1;
+        order: 2;
     }
 }

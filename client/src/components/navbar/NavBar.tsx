@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { BookMarked, House, Menu, Link, LogIn, LogOut, X } from 'lucide-react';
 import styles from './NavBar.module.css';
 import { useAuth } from '../../context/AuthContext';
@@ -9,42 +9,52 @@ const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isDarkBackground, setIsDarkBackground] = useState(false);
     const { user, logout } = useAuth();
+    const location = useLocation();
 
     useEffect(() => {
-        const updateNavbarTheme = () => {
-            const navbarCenter = window.innerHeight * 0.05;
-            const darkSections = document.querySelectorAll<HTMLElement>('[data-navbar-theme="dark"]');
-            const isDark = Array.from(darkSections).some((section) => {
-                const bounds = section.getBoundingClientRect();
-                return bounds.top <= navbarCenter && bounds.bottom >= navbarCenter;
+        // Detect when navbar enters a different section that is light or dark
+        const intersectingSections = new Set<Element>();
+        const recomputeIsDark = () => setIsDarkBackground(intersectingSections.size > 0);
+        let observer: IntersectionObserver;
+
+        const observeSections = () => {
+            const lineY = window.innerHeight * 0.05;
+            const bandHalfHeight = 1;
+            const topMargin = Math.round(lineY - bandHalfHeight);
+            const bottomMargin = Math.round(window.innerHeight - lineY - bandHalfHeight);
+            const rootMargin = `-${topMargin}px 0px -${bottomMargin}px 0px`;
+            observer = new IntersectionObserver((entries) => {
+                for (const entry of entries) {
+                    if (entry.isIntersecting) {
+                        intersectingSections.add(entry.target);
+                    } else {
+                        intersectingSections.delete(entry.target);
+                    }
+                }
+                recomputeIsDark();
+            }, { rootMargin });
+
+            document.querySelectorAll<HTMLElement>('[data-navbar-theme="dark"]').forEach((section) => {
+                observer.observe(section);
             });
-
-            setIsDarkBackground(isDark);
         };
 
-        updateNavbarTheme();
-        window.addEventListener('scroll', updateNavbarTheme, { passive: true });
-        window.addEventListener('resize', updateNavbarTheme);
+        observeSections();
 
-        return () => {
-            window.removeEventListener('scroll', updateNavbarTheme);
-            window.removeEventListener('resize', updateNavbarTheme);
-        };
-    }, []);
-
-    useEffect(() => {
+        // On screen resize, need to adjust detection line's position or page change
         const handleResize = () => {
-            if (window.innerWidth >= 768 && isMenuOpen) {
-                setIsMenuOpen(false);
-            }
+            observer.disconnect();
+            intersectingSections.clear();
+            observeSections();
         };
 
         window.addEventListener('resize', handleResize, { passive: true });
 
         return () => {
+            observer.disconnect();
             window.removeEventListener('resize', handleResize);
         };
-    }, [isMenuOpen]);
+    }, [location.pathname]);
 
     return (
         <header
@@ -107,7 +117,6 @@ const Navbar = () => {
                                 aria-expanded={isMenuOpen}
                                 aria-controls="mobile-nav"
                             >
-                                <span className={styles.srOnly}>Open main menu</span>
                                 {isMenuOpen ? (
                                     <X
                                         className={styles.mobileIcon}
@@ -173,8 +182,6 @@ const Navbar = () => {
                             )}
 
                         </li>
-
-
                     </ul>
                 </div>
             </div>

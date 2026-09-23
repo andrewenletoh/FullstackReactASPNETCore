@@ -31,27 +31,31 @@ const TasksPage: React.FC = () => {
                 aria-hidden="true"
             />
             <aside className={`${styles.editorRail} ${isEditorPanelOpen ? '' : styles.panelCollapsed}`}>
-                <button
-                    className={styles.expandAllButton}
-                    type="button"
-                    onClick={() => setExpandAll((isExpanded) => !isExpanded)}
-                    aria-pressed={expandAll}
-                    aria-label={expandAll ? 'Collapse all task cards' : 'Expand all task cards'}
-                    title={expandAll ? 'Collapse all task cards' : 'Expand all task cards'}
-                >
-                    {expandAll ?
-                        <ChevronsDownUp className={styles.icon} aria-hidden="true" /> :
-                        <ChevronsUpDown className={styles.icon} aria-hidden="true" />
-                    }
-                </button>
-                {user ? <TaskEditorPanel
+                <div className={styles.buttonContainer}>
+                    <button
+                        className={styles.expandAllButton}
+                        type="button"
+                        onClick={() => setExpandAll((isExpanded) => !isExpanded)}
+                        aria-pressed={expandAll}
+                        aria-label={expandAll ? 'Collapse all task cards' : 'Expand all task cards'}
+                        title={expandAll ? 'Collapse all task cards' : 'Expand all task cards'}
+                    >
+
+                        {expandAll ?
+                            <ChevronsDownUp className={styles.icon} aria-hidden="true" /> :
+                            <ChevronsUpDown className={styles.icon} aria-hidden="true" />
+                        }
+
+                    </button>
+                </div>
+                <TaskEditorPanel
                     columns={columns}
                     isOpen={isEditorPanelOpen}
                     isLoading={isLoading}
                     isCreating={isCreating}
                     onToggle={() => setEditorPanelOpen(!isEditorPanelOpen)}
                     onAddTask={addNewTask}
-                /> : null}
+                />
             </aside>
             <section className={styles.content}>
                 <div

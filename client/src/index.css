@@ -15,7 +15,8 @@
     /* Responsive Sizing Tokens */
     --header-text-clamp: clamp(2.20rem, 5vw, 5rem);
     --icon-button-clamp: clamp(36px, 3vw, 44px);
-    --icon-button-container-clamp: clamp(56px, 6.27vw, 92px);
+    --icon-button-container-width-clamp: clamp(60px, 5.418vw, 92px);
+    --icon-button-container-height-clamp: clamp(56px, 3.730vw, 95px);
     --icon-clamp: clamp(24px, 1.25vw, 32px);
 
     /* Root Defaults */

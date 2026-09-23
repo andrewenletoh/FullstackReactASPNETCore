@@ -1,22 +1,25 @@
 .taskEditorContainer {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    width: 17rem;
-    padding: 1rem;
+    gap: clamp(4px, 5vw, 1rem);
+    width: clamp(18rem, 22vw, 23rem);
+    padding: clamp(10px, 3.73vw, 25.75px);
     border: 0px;
     border-radius: 0.5rem;
     background: oklch(from var(--color-shadow-grey) l c h / 0.1);
     box-shadow: var(--box-shadow-sm);
+    backdrop-filter: blur(3px);
     transition: width 300ms cubic-bezier(0.22, 1, 0.36, 1), padding 300ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .taskEditorContainer.panelCollapsed {
-    width: var(--icon-button-container-clamp);
-    height: var(--icon-button-clamp);
+    width: var(--icon-button-container-width-clamp);
+    height: var(--icon-button-container-height-clamp);
     padding: 0rem;
+    display: flex;
     align-items: center;
     justify-content: center;
+    gap: 0;
     border-radius: 0.5rem;
 }
 
@@ -24,15 +27,6 @@
     position: relative;
     width: 100%;
     justify-content: center;
-}
-
-.taskEditorContainer.panelCollapsed .panelToggle {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: var(--icon-button-container-clamp);
-    height: var(--icon-button-clamp);
-    transform: translate(-50%, -35%);
 }
 
 .panelHeader {
@@ -80,19 +74,18 @@
 .panelToggle {
     position: relative;
     z-index: 1;
-    display: grid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: var(--icon-button-clamp);
     height: var(--icon-button-clamp);
     flex-shrink: 0;
-    align-items: center;
-    justify-content: center;
-    place-items: center;
     padding: 0;
     line-height: 0;
     border: 0;
-    border-radius: 0.5rem;
-    color: var(--color-shadow-grey);
-    background: transparent;
+    border-radius: 0.375rem;
+    color: inherit;
+    background: oklch(from var(--color-ghost-white) l c h / 0.6);
     cursor: pointer;
     transition: all 200ms ease;
 }
@@ -157,13 +150,6 @@
 @media (max-width: 768px) {
     .taskEditorContainer {
         width: 100%;
-        border-bottom: 1px solid var(--color-blue-slate-12);
-    }
-
-    .taskEditorContainer.panelCollapsed {
-        width: clamp(64px, 5vw, 80px);
-        height: clamp(64px, 5vw, 80px);
-        padding: 0;
     }
 
     .taskCreationForm {
