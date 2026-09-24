@@ -246,8 +246,4 @@
     .mobileMenu {
         display: none;
     }
-
-    .header {
-        --navbar-spacing: 12px;
-    }
 }
