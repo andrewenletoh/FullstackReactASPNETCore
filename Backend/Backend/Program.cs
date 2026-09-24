@@ -30,6 +30,8 @@ builder.Services.AddControllers();
 
 builder.Services.AddSingleton<MongoDBContext>();
 
+builder.Services.AddScoped<IAuthService, AuthService>();
+
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection(JwtOptions.SectionName));
 builder.Services.AddSingleton<JwtService>();
 

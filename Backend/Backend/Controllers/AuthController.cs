@@ -3,7 +3,6 @@ using Backend.Models;
 using Backend.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MongoDB.Driver;
 
 namespace Backend.Controllers;
 
@@ -15,13 +14,13 @@ public class AuthController : ControllerBase
     private const string RefreshCookieName = "refresh_token";
     private const string RefreshCookiePath = "/api/auth/refresh";
 
-    private readonly MongoDBContext _context;
+    private readonly IAuthService _authService;
     private readonly JwtService _jwt;
     private readonly IWebHostEnvironment _env;
 
-    public AuthController(MongoDBContext context, JwtService jwt, IWebHostEnvironment env)
+    public AuthController(IAuthService authService, JwtService jwt, IWebHostEnvironment env)
     {
-        _context = context;
+        _authService = authService;
         _jwt = jwt;
         _env = env;
     }
@@ -57,20 +56,6 @@ public class AuthController : ControllerBase
         Response.Cookies.Delete(RefreshCookieName, new CookieOptions { Path = RefreshCookiePath });
     }
 
-    private async System.Threading.Tasks.Task IssueTokensAsync(User user)
-    {
-        var accessToken = _jwt.CreateAccesssToken(user);
-        var refreshToken = JwtService.CreateRefreshToken();
-
-        var update = Builders<User>.Update
-            .Set(u => u.RefreshTokenHash, JwtService.HashRefreshToken(refreshToken))
-            .Set(u => u.RefreshTokenExpiresAt, DateTime.UtcNow.AddDays(_jwt.RefreshTokenDays));
-
-        await _context.Users.UpdateOneAsync(u => u.Id == user.Id, update);
-
-        SetAuthCookies(accessToken, refreshToken);
-    }
-
     // [HttpPost("register")] // POST /api/auth/register
     // public async Task<IActionResult> Register([FromBody] RegisterRequest request)
     // {
@@ -98,16 +83,13 @@ public class AuthController : ControllerBase
     [HttpPost("login")] // POST /api/auth/login
     public async Task<IActionResult> Login([FromBody] LoginRequest request)
     {
-        var user = await _context.Users.Find(u => u.Username == request.Username.Trim()).FirstOrDefaultAsync();
-
-        if (user is null || !BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash))
+        var result = await _authService.LoginAsync(request);
+        if (result is null)
         {
             return Unauthorized(new { message = "Invalid username or password." });
         }
-
-        await IssueTokensAsync(user);
-
-        return Ok(UserResponse.FromUser(user));
+        SetAuthCookies(result.AccessToken, result.RefreshToken);
+        return Ok(UserResponse.FromUser(result.User));
     }
 
     [HttpPost("logout")] // POST /api/auth/logout
@@ -115,15 +97,10 @@ public class AuthController : ControllerBase
     public async Task<IActionResult> Logout()
     {
         var userId = User.FindFirst(JwtRegisteredClaimNames.Sub)?.Value;
-
         if (!string.IsNullOrEmpty(userId))
         {
-            var update = Builders<User>.Update
-                .Set(u => u.RefreshTokenHash, null)
-                .Set(u => u.RefreshTokenExpiresAt, null);
-            await _context.Users.UpdateOneAsync(u => u.Id == userId, update);
+            await _authService.LogoutAsync(userId);
         }
-
         ClearAuthCookies();
         return NoContent();
     }
@@ -131,39 +108,41 @@ public class AuthController : ControllerBase
     [HttpPost("refresh")] // POST /api/auth/refresh
     public async Task<IActionResult> Refresh()
     {
-        if (!Request.Cookies.TryGetValue(RefreshCookieName, out var refreshToken) || string.IsNullOrEmpty(refreshToken))
+        if (!Request.Cookies.TryGetValue(
+            RefreshCookieName,
+            out var refreshToken) ||
+            string.IsNullOrEmpty(refreshToken))
         {
             return Unauthorized(new { message = "Missing refresh token." });
         }
 
-        var hash = JwtService.HashRefreshToken(refreshToken);
-        var user = await _context.Users
-            .Find(u => u.RefreshTokenHash == hash && u.RefreshTokenExpiresAt > DateTime.UtcNow)
-            .FirstOrDefaultAsync();
-
-        if (user is null)
+        var result = await _authService.RefreshAsync(refreshToken);
+        if (result is null)
         {
             ClearAuthCookies();
-            return Unauthorized(new { message = "Refresh token is invalid or expired." });
+
+            return Unauthorized(
+                new { message = "Refresh token is invalid or expired." }
+            );
         }
-
-        await IssueTokensAsync(user);
-
-        return Ok(UserResponse.FromUser(user));
+        SetAuthCookies(result.AccessToken, result.RefreshToken);
+        return Ok(UserResponse.FromUser(result.User));
     }
 
-    [HttpGet("me")] // Post /api/auth/me
+    [HttpGet("me")] // GET /api/auth/me
     [Authorize]
     public async Task<IActionResult> Me()
     {
         var userId = User.FindFirst(JwtRegisteredClaimNames.Sub)?.Value;
-        var user = await _context.Users.Find(u => u.Id == userId).FirstOrDefaultAsync();
-
+        if (string.IsNullOrEmpty(userId))
+        {
+            return Unauthorized();
+        }
+        var user = await _authService.GetUserAsync(userId);
         if (user is null)
         {
             return Unauthorized();
         }
-
         return Ok(UserResponse.FromUser(user));
     }
 }

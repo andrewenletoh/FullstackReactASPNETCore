@@ -1,7 +1,6 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using Backend.Models;
 using Microsoft.Extensions.Options;
@@ -26,7 +25,7 @@ public class JwtService
     public int AccessTokenMinutes => _options.AccessTokenMinutes;
     public int RefreshTokenDays => _options.RefreshTokenDays;
 
-    public string CreateAccesssToken(User user)
+    public string CreateAccessToken(User user)
     {
         var claims = new List<Claim>
         {
