@@ -56,30 +56,6 @@ public class AuthController : ControllerBase
         Response.Cookies.Delete(RefreshCookieName, new CookieOptions { Path = RefreshCookiePath });
     }
 
-    // [HttpPost("register")] // POST /api/auth/register
-    // public async Task<IActionResult> Register([FromBody] RegisterRequest request)
-    // {
-    //     var username = request.Username.Trim();
-
-    //     var existing = await _context.Users.Find(u => u.Username == username).FirstOrDefaultAsync();
-    //     if (existing is not null)
-    //     {
-    //         return Conflict(new { message = "Username is already taken." });
-    //     }
-
-    //     var user = new User
-    //     {
-    //         Username = username,
-    //         PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password),
-    //         Role = Roles.User
-    //     };
-
-    //     await _context.Users.InsertOneAsync(user);
-    //     await IssueTokensAsync(user);
-
-    //     return Ok(UserResponse.FromUser(user));
-    // }
-
     [HttpPost("login")] // POST /api/auth/login
     public async Task<IActionResult> Login([FromBody] LoginRequest request)
     {
