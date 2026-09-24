@@ -1,14 +1,14 @@
 import styles from './TaskBoard.module.css';
 import TaskColumn from './TaskColumn';
-import type { ColumnMap } from './taskBoard.types';
+import type { ColumnId, ColumnMap } from './taskBoard.types';
 
 
 type TaskBoardProps = {
     columns: ColumnMap;
-    onDrop: (columnId: string) => void;
-    onDragStart: (columnId: string, taskId: string) => void;
-    onDelete: (columnId: string, taskId: string) => void;
-    onEdit: (columnId: string, taskId: string, title: string, description: string) => Promise<void>;
+    onDrop: (columnId: ColumnId) => void;
+    onDragStart: (columnId: ColumnId, taskId: string) => void;
+    onDelete: (columnId: ColumnId, taskId: string) => void;
+    onEdit: (columnId: ColumnId, taskId: string, title: string, description: string) => Promise<void>;
     expandAll: boolean;
     isLoading: boolean;
     deletingTaskIds: Set<string>;
@@ -20,7 +20,7 @@ function TaskBoard({ columns, onDrop, onDragStart, onDelete, onEdit, expandAll, 
         <div className={styles.taskDashboard}>
             <div className={styles.taskBoardInteractContainer}>
                 <div className={styles.columns}>
-                    {Object.entries(columns).map(([columnId, column]) => (
+                    {(Object.entries(columns) as [ColumnId, ColumnMap[ColumnId]][]).map(([columnId, column]) => (
                         <TaskColumn
                             key={columnId}
                             column={column}

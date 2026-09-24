@@ -1,4 +1,4 @@
-import type { BackendTask, ColumnMap } from './taskBoard.types';
+import type { BackendTask, ColumnId, ColumnMap } from './taskBoard.types';
 
 
 export const initialColumns: ColumnMap = {
@@ -9,7 +9,7 @@ export const initialColumns: ColumnMap = {
     Backlog: { name: 'Backlog', status: 4, tasks: [] },
 };
 
-const statusColumns: Record<number | string, string> = {
+const statusColumns: Record<number | string, ColumnId> = {
     0: 'Todo',
     1: 'InProgress',
     2: 'Blocked',
@@ -22,15 +22,16 @@ const statusColumns: Record<number | string, string> = {
     backlog: 'Backlog',
 };
 
-export const getColumnId = (status: number | string) => {
+export const getColumnId = (status: number | string): ColumnId => {
     const normalizedStatus = typeof status === 'string' ? status.toLowerCase() : status;
     return statusColumns[normalizedStatus] ?? 'Todo';
 };
 
-export const groupTasksByStatus = (tasks: BackendTask[]) => {
-    const groupedColumns: ColumnMap = Object.fromEntries(
-        Object.entries(initialColumns).map(([columnId, column]) => [columnId, { ...column, tasks: [] }])
-    );
+export const groupTasksByStatus = (tasks: BackendTask[]): ColumnMap => {
+    const groupedColumns = (Object.keys(initialColumns) as ColumnId[]).reduce<ColumnMap>((columns, columnId) => {
+        columns[columnId] = { ...initialColumns[columnId], tasks: [] };
+        return columns;
+    }, {} as ColumnMap);
 
     tasks.forEach((task) => {
         groupedColumns[getColumnId(task.status)].tasks.push(task);

@@ -3,7 +3,7 @@ import toast from 'react-hot-toast';
 
 import { createTask, deleteTask, getTasks, updateTask, updateTaskStatus } from './taskBoard.api';
 import { initialColumns, groupTasksByStatus } from './taskBoard.utils';
-import type { ColumnMap, DraggedTask } from './taskBoard.types';
+import type { ColumnId, ColumnMap, DraggedTask } from './taskBoard.types';
 
 const LOAD_TASKS_TOAST_ID = 'load-tasks';
 const SLOW_LOAD_DELAY_MS = 1000;
@@ -59,7 +59,7 @@ export function useTaskBoard() {
         };
     }, []);
 
-    const addNewTask = async (title: string, description: string, columnId: string): Promise<boolean> => {
+    const addNewTask = async (title: string, description: string, columnId: ColumnId): Promise<boolean> => {
         if (isCreatingRef.current || isLoading) return false;
 
         const trimmedTitle = title.trim();
@@ -92,7 +92,7 @@ export function useTaskBoard() {
         return created;
     };
 
-    const removeTask = async (columnId: string, taskId: string) => {
+    const removeTask = async (columnId: ColumnId, taskId: string) => {
         if (deletingTaskIdsRef.current.has(taskId)) return;
 
         deletingTaskIdsRef.current.add(taskId);
@@ -120,7 +120,7 @@ export function useTaskBoard() {
         });
     };
 
-    const editTask = async (columnId: string, taskId: string, title: string, description: string) => {
+    const editTask = async (columnId: ColumnId, taskId: string, title: string, description: string) => {
         if (editingTaskIdsRef.current.has(taskId)) return;
 
         const currentTask = columns[columnId].tasks.find((task) => task.id === taskId);
@@ -146,12 +146,12 @@ export function useTaskBoard() {
         editingTaskIdsRef.current.delete(taskId);
     };
 
-    const startDragging = (columnId: string, taskId: string) => {
+    const startDragging = (columnId: ColumnId, taskId: string) => {
         const task = columns[columnId].tasks.find((item) => item.id === taskId);
         if (task) draggedTaskRef.current = { columnId, task };
     };
 
-    const dropTask = async (columnId: string) => {
+    const dropTask = async (columnId: ColumnId) => {
         if (isDroppingRef.current) return;
 
         const draggedTask = draggedTaskRef.current;

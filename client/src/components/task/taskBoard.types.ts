@@ -5,6 +5,8 @@ export type BackendTask = {
     status: number | string;
 };
 
+export type ColumnId = 'Todo' | 'InProgress' | 'Blocked' | 'Done' | 'Backlog';
+
 export type TaskColumn = {
     name: string;
     status: number;
@@ -14,6 +16,6 @@ export type TaskColumn = {
 export type ColumnMap = Record<string, TaskColumn>;
 
 export type DraggedTask = {
-    columnId: string;
+    columnId: ColumnId;
     task: BackendTask;
 } | null;

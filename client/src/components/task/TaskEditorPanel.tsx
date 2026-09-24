@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { PanelLeftClose, PanelLeftOpen } from 'lucide-react';
 import styles from './TaskEditorPanel.module.css';
-import type { ColumnMap } from './taskBoard.types';
+import type { ColumnId, ColumnMap } from './taskBoard.types';
 
 
 type TaskEditorPanelProps = {
@@ -23,7 +23,7 @@ function TaskEditorPanel({
 }: TaskEditorPanelProps) {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
-    const [columnId, setColumnId] = useState(() => Object.keys(columns)[0] ?? '');
+    const [columnId, setColumnId] = useState<ColumnId>(() => (Object.keys(columns) as ColumnId[])[0] ?? 'Todo');
 
     const submit = async () => {
         const didCreate = await onAddTask(title, description, columnId);
@@ -79,10 +79,10 @@ function TaskEditorPanel({
                 <select
                     className={styles.columnSelect}
                     value={columnId}
-                    onChange={(event) => setColumnId(event.target.value)}
+                    onChange={(event) => setColumnId(event.target.value as ColumnId)}
                     aria-label="Column"
                 >
-                    {Object.keys(columns).map((id) => (
+                    {(Object.keys(columns) as ColumnId[]).map((id) => (
                         <option value={id} key={id}>
                             {columns[id].name}
                         </option>
