@@ -10,7 +10,7 @@ type TaskEditorPanelProps = {
     isLoading: boolean;
     isCreating: boolean;
     onToggle: () => void;
-    onAddTask: (title: string, description: string, columnId: string) => Promise<boolean>;
+    onAddTask: (title: string, description: string, columnId: ColumnId) => Promise<boolean>;
 };
 
 function TaskEditorPanel({
