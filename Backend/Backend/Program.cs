@@ -1,6 +1,8 @@
 using System.Text;
 using Backend.Models;
 using Backend.Services;
+using Backend.Services.Auth;
+using Backend.Services.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
@@ -28,9 +30,13 @@ builder.Services.AddCors(options =>
 //services
 builder.Services.AddControllers();
 
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
+
 builder.Services.AddSingleton<MongoDBContext>();
 
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<ITaskService, TaskService>();
 
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection(JwtOptions.SectionName));
 builder.Services.AddSingleton<JwtService>();
@@ -70,12 +76,13 @@ builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
+app.UseExceptionHandler();
+
 app.UseCors(MyAllowSpecificOrigins);
 
 app.UseAuthentication();
 app.UseAuthorization();
 
-// middlewares
 app.MapControllers();
 
 app.Run();

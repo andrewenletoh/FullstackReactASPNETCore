@@ -2,9 +2,9 @@ using Backend.Dtos.Auth;
 using Backend.Models;
 using MongoDB.Driver;
 
-namespace Backend.Services;
+namespace Backend.Services.Auth;
 
-public class AuthService : IAuthService
+public sealed class AuthService : IAuthService
 {
     private readonly MongoDBContext _context;
     private readonly JwtService _jwt;
@@ -15,7 +15,7 @@ public class AuthService : IAuthService
         _jwt = jwt;
     }
 
-    public async Task<AuthResult?> LoginAsync(LoginRequest request)
+    public async Task<AuthResult?> LoginAsync(LoginRequest request, CancellationToken cancellationToken = default)
     {
         var username = request.Username.Trim();
 
@@ -28,10 +28,10 @@ public class AuthService : IAuthService
             return null;
         }
 
-        return await CreateAuthResultAsync(user);
+        return await CreateAuthResultAsync(user, cancellationToken);
     }
 
-    public async Task<bool> LogoutAsync(string userId)
+    public async Task<bool> LogoutAsync(string userId, CancellationToken cancellationToken = default)
     {
         var update = Builders<User>.Update
             .Set(u => u.RefreshTokenHash, null)
@@ -39,13 +39,14 @@ public class AuthService : IAuthService
 
         var result = await _context.Users.UpdateOneAsync(
             u => u.Id == userId,
-            update
+            update,
+            cancellationToken: cancellationToken
         );
 
         return result.MatchedCount > 0;
     }
 
-    public async Task<AuthResult?> RefreshAsync(string refreshToken)
+    public async Task<AuthResult?> RefreshAsync(string refreshToken, CancellationToken cancellationToken = default)
     {
         var hash = JwtService.HashRefreshToken(refreshToken);
 
@@ -53,24 +54,24 @@ public class AuthService : IAuthService
             .Find(u =>
                 u.RefreshTokenHash == hash &&
                 u.RefreshTokenExpiresAt > DateTime.UtcNow)
-            .FirstOrDefaultAsync();
+            .FirstOrDefaultAsync(cancellationToken);
 
         if (user is null)
         {
             return null;
         }
 
-        return await CreateAuthResultAsync(user);
+        return await CreateAuthResultAsync(user, cancellationToken);
     }
 
-    public async Task<User?> GetUserAsync(string userId)
+    public async Task<User?> GetUserAsync(string userId, CancellationToken cancellationToken)
     {
         return await _context.Users
             .Find(u => u.Id == userId)
-            .FirstOrDefaultAsync();
+            .FirstOrDefaultAsync(cancellationToken);
     }
 
-    private async Task<AuthResult> CreateAuthResultAsync(User user)
+    private async Task<AuthResult> CreateAuthResultAsync(User user, CancellationToken cancellationToken = default)
     {
         var accessToken = _jwt.CreateAccessToken(user);
         var refreshToken = JwtService.CreateRefreshToken();
@@ -87,7 +88,8 @@ public class AuthService : IAuthService
 
         await _context.Users.UpdateOneAsync(
             u => u.Id == user.Id,
-            update
+            update,
+            cancellationToken: cancellationToken
         );
 
         return new AuthResult(

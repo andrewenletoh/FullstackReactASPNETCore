@@ -1,8 +1,10 @@
+
+using Backend.Dtos.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MongoDB.Driver;
 
 using Backend.Models;
+using Backend.Services.Tasks;
 
 namespace Backend.Controllers;
 
@@ -10,111 +12,80 @@ namespace Backend.Controllers;
 [ApiController]
 public class TasksController : ControllerBase
 {
-    private readonly MongoDBContext _context;
+    private readonly ITaskService _taskService;
 
-    public TasksController(MongoDBContext context)
+    public TasksController(ITaskService taskService)
     {
-        _context = context;
+        _taskService = taskService;
     }
 
     [HttpPost] // POST /api/tasks
     [Authorize(Roles = Roles.Admin)]
-    public async Task<IActionResult> AddTask(Models.Task task)
+    public async Task<IActionResult> AddTask([FromBody] CreateTaskRequest request, CancellationToken cancellationToken)
     {
-        try
+        var task = await _taskService.CreateTaskAsync(request, cancellationToken);
+
+        if (task is null)
         {
-            await _context.Tasks.InsertOneAsync(task);
-            return CreatedAtRoute("GetTask", new { id = task.Id }, task); // 201 Created
-            // status code + location of the resource (http://localhost:3000/api/tasks/{id})
-            // + task object in the body
+            return Problem(detail: "Something went wrong."); // 500 Creation failed for some reason
         }
-        catch (Exception ex)
-        {
-            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message); // 500 internal
-            // server error + message in the response body
-        }
+
+        return CreatedAtRoute("GetTask", new { id = task.Id }, task);
     }
 
     [HttpGet] // GET /api/tasks or /api/tasks?status=InProgress
-    public async Task<IActionResult> GetTasks([FromQuery] Models.TaskStatus? status)
+    public async Task<IActionResult> GetTasks([FromQuery] Models.TaskStatus? status, CancellationToken cancellationToken)
     {
-        try
-        {
-            var filter = status.HasValue
-                ? Builders<Models.Task>.Filter.Eq(t => t.Status, status.Value)
-                : Builders<Models.Task>.Filter.Empty;
+        var tasks = await _taskService.GetTasksAsync(status);
 
-            var tasks = await _context.Tasks.Find(filter).ToListAsync();
-            return Ok(tasks); // 200 Ok status code + task objects in the body
-        }
-        catch (Exception ex)
+        if (tasks is null)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message); // 500 internal
-            // server error + message in the response body
+            return Problem(detail: "Something went wrong."); // 500 Fetching tasks list failed for some reason
         }
+
+        return Ok(tasks);
     }
 
     [HttpGet("{id}", Name = "GetTask")] // GET /api/tasks/{id}
-    public async Task<IActionResult> GetTask(string id)
+    public async Task<IActionResult> GetTask(string id, CancellationToken cancellationToken)
     {
-        try
+        var task = await _taskService.GetTaskAsync(id, cancellationToken);
+
+        if (task is null)
         {
-            var task = await _context.Tasks.Find(t => t.Id == id).FirstOrDefaultAsync();
-            if (task == null)
-            {
-                return NotFound(); // 404 Not Found status code
-            }
-            return Ok(task); // 200 Ok status code + task object in the body
+            return NotFound(); // 404 Not Found
         }
-        catch (Exception ex)
-        {
-            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message); // 500 internal
-            // server error + message in the response body
-        }
+
+        return Ok(task);
     }
 
     [HttpPut("{id}")] // PUT /api/tasks/{id}
     [Authorize(Roles = Roles.Admin)]
-    public async Task<IActionResult> UpdateTask(string id, [FromBody] Models.Task task)
+    public async Task<IActionResult> UpdateTask(string id, [FromBody] UpdateTaskRequest request, CancellationToken cancellationToken)
     {
-        try
+        var updated = await _taskService.UpdateTaskAsync(id, request, cancellationToken);
+
+        if (!updated)
         {
-            if (id != task.Id)
-            {
-                return BadRequest("ID in url and body mismatch"); // 400 Bad Request status code
-                // + message in the response body
-            }
-            var result = await _context.Tasks.ReplaceOneAsync(t => t.Id == id, task);
-            if (result.MatchedCount == 0)
-            {
-                return NotFound(); // 404 Not Found status code
-            }
-            return NoContent(); // 204 status code
+            return Problem(detail: "Something went wrong."); // 500 Editing task failed for some reason
         }
-        catch (Exception ex)
-        {
-            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message); // 500 internal
-            // server error + message in the response body
-        }
+
+        return NoContent(); // 204 No Content
     }
+
 
     [HttpDelete("{id}")] // DELETE /api/tasks/{id}
     [Authorize(Roles = Roles.Admin)]
-    public async Task<IActionResult> DeleteTask(string id)
+    public async Task<IActionResult> DeleteTask(string id, CancellationToken cancellationToken)
     {
-        try
+        var deleted = await _taskService.DeleteTaskAsync(id, cancellationToken);
+
+        if (!deleted)
         {
-            var result = await _context.Tasks.DeleteOneAsync(t => t.Id == id);
-            if (result.DeletedCount == 0)
-            {
-                return NotFound(); // 404 Not Found status code
-            }
-            return NoContent(); // 204 status code
+            return Problem(detail: "Something went wrong."); // 500 Deleting task failed for some reason
         }
-        catch (Exception ex)
-        {
-            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message); // 500 internal
-            // server error + message in the response body
-        }
+
+        return NoContent(); // 204 No Content
     }
+
 }

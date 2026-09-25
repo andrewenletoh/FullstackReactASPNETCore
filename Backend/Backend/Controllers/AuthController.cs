@@ -1,6 +1,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using Backend.Dtos.Auth;
 using Backend.Services;
+using Backend.Services.Auth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
