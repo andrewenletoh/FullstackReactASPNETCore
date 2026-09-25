@@ -1,5 +1,5 @@
 using System.IdentityModel.Tokens.Jwt;
-using Backend.Models;
+using Backend.Dtos.Auth;
 using Backend.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -60,10 +60,12 @@ public class AuthController : ControllerBase
     public async Task<IActionResult> Login([FromBody] LoginRequest request)
     {
         var result = await _authService.LoginAsync(request);
+
         if (result is null)
         {
             return Unauthorized(new { message = "Invalid username or password." });
         }
+
         SetAuthCookies(result.AccessToken, result.RefreshToken);
         return Ok(UserResponse.FromUser(result.User));
     }
@@ -73,10 +75,12 @@ public class AuthController : ControllerBase
     public async Task<IActionResult> Logout()
     {
         var userId = User.FindFirst(JwtRegisteredClaimNames.Sub)?.Value;
+
         if (!string.IsNullOrEmpty(userId))
         {
             await _authService.LogoutAsync(userId);
         }
+
         ClearAuthCookies();
         return NoContent();
     }
@@ -93,6 +97,7 @@ public class AuthController : ControllerBase
         }
 
         var result = await _authService.RefreshAsync(refreshToken);
+
         if (result is null)
         {
             ClearAuthCookies();
@@ -101,6 +106,7 @@ public class AuthController : ControllerBase
                 new { message = "Refresh token is invalid or expired." }
             );
         }
+
         SetAuthCookies(result.AccessToken, result.RefreshToken);
         return Ok(UserResponse.FromUser(result.User));
     }
@@ -110,15 +116,19 @@ public class AuthController : ControllerBase
     public async Task<IActionResult> Me()
     {
         var userId = User.FindFirst(JwtRegisteredClaimNames.Sub)?.Value;
+
         if (string.IsNullOrEmpty(userId))
         {
             return Unauthorized();
         }
+
         var user = await _authService.GetUserAsync(userId);
+
         if (user is null)
         {
             return Unauthorized();
         }
+
         return Ok(UserResponse.FromUser(user));
     }
 }
