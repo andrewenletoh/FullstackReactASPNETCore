@@ -1,12 +1,9 @@
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import styles from './AuthPage.module.css';
 import { useAuth } from '../context/AuthContext';
 
-
-type Mode = 'login' | 'register';
 
 interface AuthFormValues {
     username: string;
@@ -18,7 +15,6 @@ interface LocationState {
 }
 
 const AuthPage = () => {
-    const [mode, setMode] = useState<Mode>('login');
     const { login/*, register: registerAccount*/ } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
@@ -26,7 +22,6 @@ const AuthPage = () => {
     const {
         register,
         handleSubmit,
-        reset,
         formState: { errors, isSubmitting },
     } = useForm<AuthFormValues>();
 
@@ -34,37 +29,24 @@ const AuthPage = () => {
 
     const onSubmit = async (values: AuthFormValues) => {
         try {
-            if (mode === 'login') {
-                await login(values);
-            } else {
-                // await registerAccount(values);
-            }
+            await login(values);
             navigate(redirectTo, { replace: true });
         } catch (error) {
-            const fallback = mode === 'login' ? 'Invalid username or password.' : 'Could not create account.';
+            const fallback = 'Invalid username or password.';
             const message =
                 (error as { response?: { data?: { message?: string } } })?.response?.data?.message ?? fallback;
             toast.error(message);
         }
     };
 
-    const switchMode = () => {
-        setMode((current) => (current === 'login' ? 'register' : 'login'));
-        reset();
-    };
-
     return (
         <div className={styles.page}>
             <div className={styles.content}>
                 <div className={styles.card}>
-                    <h1 className={styles.title}>{mode === 'login' ? 'Welcome back' : 'Create an account'}</h1>
-                    <p className={styles.subtitle}>
-                        {mode === 'login'
-                            ? 'Sign in to see your tasks.'
-                            : 'Set up an account to start tracking tasks.'}
-                    </p>
+                    <h1 className={styles.title}>Welcome back</h1>
+                    <p className={styles.subtitle}>Sign in to see your tasks.'</p>
 
-                    <form key={mode} className={styles.form} onSubmit={handleSubmit(onSubmit)} noValidate>
+                    <form className={styles.form} onSubmit={handleSubmit(onSubmit)} noValidate>
                         <label className={styles.field}>
                             <span className={styles.label}>Username</span>
                             <input
@@ -84,7 +66,7 @@ const AuthPage = () => {
                             <input
                                 className={styles.input}
                                 type="password"
-                                autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
+                                autoComplete={'current-password'}
                                 {...register('password', {
                                     required: 'Password is required',
                                     minLength: { value: 8, message: 'At least 8 characters' },
@@ -94,14 +76,9 @@ const AuthPage = () => {
                         </label>
 
                         <button className={styles.submit} type="submit" disabled={isSubmitting}>
-                            {isSubmitting ? 'Please wait…' : mode === 'login' ? 'Sign in' : 'Create account'}
+                            {isSubmitting ? 'Please wait…' : 'Sign in'}
                         </button>
                     </form>
-
-                    {/* hidden for now until use case for account registry is needed */}
-                    <button disabled hidden className={styles.switch} type="button" onClick={switchMode}>
-                        {mode === 'login' ? "Don't have an account? Register" : 'Already have an account? Sign in'}
-                    </button>
                 </div>
             </div>
         </div>
