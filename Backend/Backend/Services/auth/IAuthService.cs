@@ -1,3 +1,4 @@
+using Backend.Dtos.Auth;
 using Backend.Models;
 
 namespace Backend.Services;

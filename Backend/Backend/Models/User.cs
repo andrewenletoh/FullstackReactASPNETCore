@@ -29,6 +29,5 @@ public class User
 
     public DateTime? RefreshTokenExpiresAt { get; set; }
 
-
 }
 
