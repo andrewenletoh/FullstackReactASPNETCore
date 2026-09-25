@@ -36,7 +36,7 @@ public class TasksController : ControllerBase
     [HttpGet] // GET /api/tasks or /api/tasks?status=InProgress
     public async Task<IActionResult> GetTasks([FromQuery] Models.TaskStatus? status, CancellationToken cancellationToken)
     {
-        var tasks = await _taskService.GetTasksAsync(status);
+        var tasks = await _taskService.GetTasksAsync(status, cancellationToken);
 
         if (tasks is null)
         {

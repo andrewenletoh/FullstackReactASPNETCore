@@ -21,7 +21,7 @@ public sealed class AuthService : IAuthService
 
         var user = await _context.Users
             .Find(u => u.Username == username)
-            .FirstOrDefaultAsync();
+            .FirstOrDefaultAsync(cancellationToken);
 
         if (user is null || !BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash))
         {
