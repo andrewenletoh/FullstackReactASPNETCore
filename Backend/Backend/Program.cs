@@ -3,6 +3,7 @@ using Backend.Models;
 using Backend.Services;
 using Backend.Services.Auth;
 using Backend.Services.Tasks;
+using Backend.Services.Jwt;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
