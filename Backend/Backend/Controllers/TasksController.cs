@@ -21,6 +21,10 @@ public class TasksController : ControllerBase
 
     [HttpPost] // POST /api/tasks
     [Authorize(Roles = Roles.Admin)]
+    [ProducesResponseType<TaskResponse>(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)] // [Required]/[StringLength] validation failure
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)] // missing/invalid access token
+    [ProducesResponseType(StatusCodes.Status403Forbidden)] // authenticated, but not an Admin
     public async Task<IActionResult> AddTask([FromBody] CreateTaskRequest request, CancellationToken cancellationToken)
     {
         var task = await _taskService.CreateTaskAsync(request, cancellationToken);
@@ -30,6 +34,7 @@ public class TasksController : ControllerBase
     }
 
     [HttpGet] // GET /api/tasks or /api/tasks?status=InProgress
+    [ProducesResponseType<IEnumerable<TaskResponse>>(StatusCodes.Status200OK)]
     public async Task<IActionResult> GetTasks([FromQuery] Models.TaskStatus? status, CancellationToken cancellationToken)
     {
         var tasks = await _taskService.GetTasksAsync(status, cancellationToken);
@@ -39,6 +44,8 @@ public class TasksController : ControllerBase
     }
 
     [HttpGet("{id}", Name = "GetTask")] // GET /api/tasks/{id}
+    [ProducesResponseType<TaskResponse>(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetTask(string id, CancellationToken cancellationToken)
     {
         var task = await _taskService.GetTaskAsync(id, cancellationToken);
@@ -53,6 +60,11 @@ public class TasksController : ControllerBase
 
     [HttpPut("{id}")] // PUT /api/tasks/{id}
     [Authorize(Roles = Roles.Admin)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)] // [Required]/[StringLength] validation failure
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)] // missing/invalid access token
+    [ProducesResponseType(StatusCodes.Status403Forbidden)] // authenticated, but not an Admin
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> UpdateTask(string id, [FromBody] UpdateTaskRequest request, CancellationToken cancellationToken)
     {
         var updated = await _taskService.UpdateTaskAsync(id, request, cancellationToken);
@@ -68,6 +80,10 @@ public class TasksController : ControllerBase
 
     [HttpDelete("{id}")] // DELETE /api/tasks/{id}
     [Authorize(Roles = Roles.Admin)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)] // missing/invalid access token
+    [ProducesResponseType(StatusCodes.Status403Forbidden)] // authenticated, but not an Admin
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteTask(string id, CancellationToken cancellationToken)
     {
         var deleted = await _taskService.DeleteTaskAsync(id, cancellationToken);

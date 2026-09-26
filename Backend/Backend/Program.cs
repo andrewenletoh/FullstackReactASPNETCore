@@ -7,6 +7,7 @@ using Backend.Services.Tasks;
 using Backend.Services.Jwt;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Scalar.AspNetCore;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
@@ -96,7 +97,10 @@ app.MapControllers();
 
 if (app.Environment.IsDevelopment())
 {
+    // http://localhost:3000/openapi/v1.json
     app.MapOpenApi();
+    // http://localhost:3000/scalar/v1.
+    app.MapScalarApiReference();
 }
 
 app.Run();

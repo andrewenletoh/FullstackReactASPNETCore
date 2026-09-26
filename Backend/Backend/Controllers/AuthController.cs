@@ -58,6 +58,9 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("login")] // POST /api/auth/login
+    [ProducesResponseType<UserResponse>(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)] // [Required]/[StringLength] validation failure
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)] // wrong username or password
     public async Task<IActionResult> Login([FromBody] LoginRequest request, CancellationToken cancellationToken)
     {
         var result = await _authService.LoginAsync(request, cancellationToken);
@@ -73,6 +76,8 @@ public class AuthController : ControllerBase
 
     [HttpPost("logout")] // POST /api/auth/logout
     [Authorize]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)] // missing/invalid access token
     public async Task<IActionResult> Logout(CancellationToken cancellationToken)
     {
         var userId = User.FindFirst(JwtRegisteredClaimNames.Sub)?.Value;
@@ -87,6 +92,8 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("refresh")] // POST /api/auth/refresh
+    [ProducesResponseType<UserResponse>(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)] // missing, invalid, or expired refresh token
     public async Task<IActionResult> Refresh(CancellationToken cancellationToken)
     {
         if (!Request.Cookies.TryGetValue(
@@ -114,6 +121,8 @@ public class AuthController : ControllerBase
 
     [HttpGet("me")] // GET /api/auth/me
     [Authorize]
+    [ProducesResponseType<UserResponse>(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)] // missing/invalid access token, or user no longer exists
     public async Task<IActionResult> Me(CancellationToken cancellationToken)
     {
         var userId = User.FindFirst(JwtRegisteredClaimNames.Sub)?.Value;
