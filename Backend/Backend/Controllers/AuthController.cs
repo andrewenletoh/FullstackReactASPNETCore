@@ -1,7 +1,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using Backend.Dtos.Auth;
-using Backend.Services;
 using Backend.Services.Auth;
+using Backend.Services.Jwt;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -58,9 +58,9 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("login")] // POST /api/auth/login
-    public async Task<IActionResult> Login([FromBody] LoginRequest request)
+    public async Task<IActionResult> Login([FromBody] LoginRequest request, CancellationToken cancellationToken)
     {
-        var result = await _authService.LoginAsync(request);
+        var result = await _authService.LoginAsync(request, cancellationToken);
 
         if (result is null)
         {
@@ -73,13 +73,13 @@ public class AuthController : ControllerBase
 
     [HttpPost("logout")] // POST /api/auth/logout
     [Authorize]
-    public async Task<IActionResult> Logout()
+    public async Task<IActionResult> Logout(CancellationToken cancellationToken)
     {
         var userId = User.FindFirst(JwtRegisteredClaimNames.Sub)?.Value;
 
         if (!string.IsNullOrEmpty(userId))
         {
-            await _authService.LogoutAsync(userId);
+            await _authService.LogoutAsync(userId, cancellationToken);
         }
 
         ClearAuthCookies();
@@ -87,7 +87,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("refresh")] // POST /api/auth/refresh
-    public async Task<IActionResult> Refresh()
+    public async Task<IActionResult> Refresh(CancellationToken cancellationToken)
     {
         if (!Request.Cookies.TryGetValue(
             RefreshCookieName,
@@ -97,7 +97,7 @@ public class AuthController : ControllerBase
             return Unauthorized(new { message = "Missing refresh token." });
         }
 
-        var result = await _authService.RefreshAsync(refreshToken);
+        var result = await _authService.RefreshAsync(refreshToken, cancellationToken);
 
         if (result is null)
         {
@@ -114,7 +114,7 @@ public class AuthController : ControllerBase
 
     [HttpGet("me")] // GET /api/auth/me
     [Authorize]
-    public async Task<IActionResult> Me()
+    public async Task<IActionResult> Me(CancellationToken cancellationToken)
     {
         var userId = User.FindFirst(JwtRegisteredClaimNames.Sub)?.Value;
 
@@ -123,7 +123,7 @@ public class AuthController : ControllerBase
             return Unauthorized();
         }
 
-        var user = await _authService.GetUserAsync(userId);
+        var user = await _authService.GetUserAsync(userId, cancellationToken);
 
         if (user is null)
         {

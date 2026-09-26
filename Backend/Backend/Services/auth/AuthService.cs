@@ -1,5 +1,6 @@
 using Backend.Dtos.Auth;
 using Backend.Models;
+using Backend.Services.Jwt;
 using MongoDB.Driver;
 
 namespace Backend.Services.Auth;
@@ -64,7 +65,7 @@ public sealed class AuthService : IAuthService
         return await CreateAuthResultAsync(user, cancellationToken);
     }
 
-    public async Task<User?> GetUserAsync(string userId, CancellationToken cancellationToken)
+    public async Task<User?> GetUserAsync(string userId, CancellationToken cancellationToken = default)
     {
         return await _context.Users
             .Find(u => u.Id == userId)

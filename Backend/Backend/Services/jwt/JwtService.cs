@@ -6,7 +6,7 @@ using Backend.Models;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Backend.Services;
+namespace Backend.Services.Jwt;
 
 public class JwtService
 {

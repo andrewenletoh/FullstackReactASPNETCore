@@ -1,6 +1,6 @@
 using Backend.Models;
 
-namespace Backend.Services;
+namespace Backend.Services.Auth;
 
 public record AuthResult(
     User User,

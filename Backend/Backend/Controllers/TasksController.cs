@@ -25,11 +25,6 @@ public class TasksController : ControllerBase
     {
         var task = await _taskService.CreateTaskAsync(request, cancellationToken);
 
-        if (task is null)
-        {
-            return Problem(detail: "Something went wrong."); // 500 Creation failed for some reason
-        }
-
         return CreatedAtRoute("GetTask", new { id = task.Id }, task);
     }
 
@@ -37,11 +32,6 @@ public class TasksController : ControllerBase
     public async Task<IActionResult> GetTasks([FromQuery] Models.TaskStatus? status, CancellationToken cancellationToken)
     {
         var tasks = await _taskService.GetTasksAsync(status, cancellationToken);
-
-        if (tasks is null)
-        {
-            return Problem(detail: "Something went wrong."); // 500 Fetching tasks list failed for some reason
-        }
 
         return Ok(tasks);
     }
@@ -67,7 +57,7 @@ public class TasksController : ControllerBase
 
         if (!updated)
         {
-            return Problem(detail: "Something went wrong."); // 500 Editing task failed for some reason
+            return NotFound(); // 404
         }
 
         return NoContent(); // 204 No Content
@@ -82,7 +72,7 @@ public class TasksController : ControllerBase
 
         if (!deleted)
         {
-            return Problem(detail: "Something went wrong."); // 500 Deleting task failed for some reason
+            return NotFound(); // 404
         }
 
         return NoContent(); // 204 No Content
