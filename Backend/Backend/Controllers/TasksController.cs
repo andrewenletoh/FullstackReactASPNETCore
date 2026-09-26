@@ -24,16 +24,18 @@ public class TasksController : ControllerBase
     public async Task<IActionResult> AddTask([FromBody] CreateTaskRequest request, CancellationToken cancellationToken)
     {
         var task = await _taskService.CreateTaskAsync(request, cancellationToken);
+        var response = TaskResponse.FromTask(task);
 
-        return CreatedAtRoute("GetTask", new { id = task.Id }, task);
+        return CreatedAtRoute("GetTask", new { id = response.Id }, task);
     }
 
     [HttpGet] // GET /api/tasks or /api/tasks?status=InProgress
     public async Task<IActionResult> GetTasks([FromQuery] Models.TaskStatus? status, CancellationToken cancellationToken)
     {
         var tasks = await _taskService.GetTasksAsync(status, cancellationToken);
+        var response = tasks.Select(TaskResponse.FromTask);
 
-        return Ok(tasks);
+        return Ok(response);
     }
 
     [HttpGet("{id}", Name = "GetTask")] // GET /api/tasks/{id}
@@ -46,7 +48,7 @@ public class TasksController : ControllerBase
             return NotFound(); // 404 Not Found
         }
 
-        return Ok(task);
+        return Ok(TaskResponse.FromTask(task));
     }
 
     [HttpPut("{id}")] // PUT /api/tasks/{id}
