@@ -3,9 +3,12 @@ using System.Text.Json.Serialization;
 using Backend.Models;
 using Backend.Services;
 using Backend.Services.Auth;
-using Backend.Services.Tasks;
+using Backend.Services.Health;
 using Backend.Services.Jwt;
+using Backend.Services.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
 
@@ -37,6 +40,7 @@ builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddProblemDetails();
 
 builder.Services.AddSingleton<MongoDBContext>();
+builder.Services.AddHealthChecks().AddCheck<MongoHealthCheck>("mongodb", tags: ["ready"]);
 
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
@@ -102,5 +106,37 @@ if (app.Environment.IsDevelopment())
     // http://localhost:3000/scalar/v1.
     app.MapScalarApiReference();
 }
+
+async System.Threading.Tasks.Task WriteHealthCheckResponse(HttpContext httpContext, HealthReport report)
+{
+    httpContext.Response.ContentType = "application/json";
+
+    var payload = new
+    {
+        status = report.Status.ToString(),
+        checks = report.Entries.Select(entry => new
+        {
+            name = entry.Key,
+            status = entry.Value.Status.ToString(),
+            description = entry.Value.Description
+        })
+    };
+
+    await httpContext.Response.WriteAsJsonAsync(payload);
+}
+
+// live = Run zero checks, just confirming ASP.NET Core pipeline is alive and can respond
+app.MapHealthChecks("/health/live", new HealthCheckOptions
+{
+    Predicate = _ => false,
+    ResponseWriter = WriteHealthCheckResponse
+});
+
+// ready = pings mongoDB, checks if it's reachable and can take traffic
+app.MapHealthChecks("/health/ready", new HealthCheckOptions
+{
+    Predicate = check => check.Tags.Contains("ready"),
+    ResponseWriter = WriteHealthCheckResponse
+});
 
 app.Run();

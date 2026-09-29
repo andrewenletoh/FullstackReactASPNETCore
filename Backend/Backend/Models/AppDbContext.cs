@@ -1,3 +1,4 @@
+using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Authentication.AWS;
 
@@ -28,4 +29,8 @@ public class MongoDBContext
         Users.Indexes.CreateOne(usernameIndex);
     }
 
+    public async System.Threading.Tasks.Task PingAsync(CancellationToken cancellationToken = default)
+    {
+        await _database.RunCommandAsync<BsonDocument>(new BsonDocument("ping", 1), cancellationToken: cancellationToken);
+    }
 }
